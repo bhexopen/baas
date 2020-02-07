@@ -1,1 +1,3 @@
-# BLUEHEILX BAAS API documentation
+# BLUEHEILX BAAS API 
+
+Please see [https://bhexopen.github.io/baas] (https://bhexopen.github.io/baas)
