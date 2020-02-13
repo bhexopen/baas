@@ -129,7 +129,7 @@ curl
 ```javascript
 ```
 
-> 返回结果：
+> Reponse：
 
 ```json
 {
@@ -193,7 +193,7 @@ curl
 ```javascript
 ```
 
-> 返回结果：
+> Reponse：
 
 ```json
 {
@@ -264,7 +264,7 @@ curl
 ```javascript
 ```
 
-> 返回结果：
+> Reponse：
 
 ```json
 {
@@ -328,7 +328,7 @@ curl
 ```javascript
 ```
 
-> 返回结果：
+> Reponse：
 
 ```json
 {
@@ -428,7 +428,7 @@ curl
 ```javascript
 ```
 
-> 返回结果：
+> Reponse：
 
 ```json
 {
@@ -498,7 +498,7 @@ curl
 ```javascript
 ```
 
-> 返回结果：
+> Reponse：
 
 ```json
 {
@@ -536,9 +536,9 @@ Asset reconciliation is performed on a regular basis, and the customer service t
 When the server finds that the asset information returned by the client is inconsistent with the server, it will return an error and suspend the deposit and withdrawal of the currency.
 </aside>
 
-# 返回值列表
+# Return code list
 
-返回值 | 类型| 说明
+Code |Type| Description
 -----------|-----------|-----------
 10000 | SUCCESS| successful
 10001 | INVALID_SIGN| invalid signature
@@ -557,6 +557,6 @@ When the server finds that the asset information returned by the client is incon
 10015 | INVALID_INDEX | invalid tx index
 10016 | NETWORK_ERROR | network error
 10017 | REPEAT_DEPOSIT | repeat deposit
-10011 | ASSET_VERIFY_FAILED| asset verification failed
-10012 | DEPOSIT_SUSPENDED| deposit suspended
-10013 | WITHDRAWAL_SUSPENDED| withdrawal suspended
+10018 | ASSET_VERIFY_FAILED| asset verification failed
+10019 | DEPOSIT_SUSPENDED| deposit suspended
+10020 | WITHDRAWAL_SUSPENDED| withdrawal suspended
