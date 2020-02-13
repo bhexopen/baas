@@ -32,7 +32,7 @@ BLUEHELIX BAAS 提供REST风格的API（HTTPS + JSON)，方便BHOP客户自助�
 币种ID | ABC
 所属公链| ABC
 代币精度| 8
-代币总量| 100亿
+代币总量| 10 billion
 IP地址 | 100.100.100.100 （用作IP白名单限制）
 
 ## 客户端代码示例
