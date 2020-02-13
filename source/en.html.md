@@ -14,51 +14,56 @@ toc_footers:
 search: true
 ---
 
-# 关于 BLUEHELIX BAAS
+# About BLUEHELIX BAAS
 
-## 概述
-BLUEHELIX BAAS 提供REST风格的API（HTTPS + JSON)，方便BHOP客户自助接入第三方公链。
+## Overview
+BLUEHELIX BAAS provides a REST API (HTTPS + JSON) to facilitate Bluehelix Cloud customers' for self-service access to third-party public chains.
 
-在请求API接口之前，需要申请APIKEY, 使用ED25519算法生成公私钥对，用户自己保存私钥，公钥在上币申请时进行提交，得到APIKEY。
+Before requesting for an API socket, users need to apply for an APIKEY by using ED25519 algorithm to generate the Public & Private Keys. Users are required to save the Public & Private Keys. Submit the application for coin listing and attach the Public & Private Keys accordingly. The APIKEY will then be issued to the applicant.
 
-## 申请方式
-- 工单系统
-- 邮箱 globalbd@bhex.com
+## How to apply?
+- Submit a Ticket Request
+- Email to globalbd@bhex.com
 
-## 上币申请材料
+## Information Required For Coin Listing
 
-参数|值
+Parameter|Value
 -----------|------------
-币种ID | ABC
-所属公链| ABC
-代币精度| 8
-代币总量| 100亿
-IP地址 | 100.100.100.100 （用作IP白名单限制）
+Digital Asset Symbol | ABC
+Explorer| ABC
+Decimals| 8
+Total Supply| 100亿
+IP address | 100.100.100.100  (used as IP whitelist restriction)
 
-## 客户端代码示例
-提供4种编程语言（Python, JavaScript, Golang, JAVA)的用户端代码供用户使用 [https://github.com/bhexopen/baas/clients] (https://github.com/bhexopen/baas/clients)。
+## Client Sample
+Developer can code using any one of the following programming languages (Python, JavaScript, Golang, JAVA) 
+https://github.com/bhexopen/baas/clients.
 
-# API签名认证
+# API Signature Authentication
+  The data needs to be signed as the following: HTTP_METHOD + | + HTTP_REQUEST_PATH + | + TIMESTAMP + | + PARAMS
 
-## 域名
-- 测试环境：https://sandbox.bluehelix.com
-- 正式环境：https://baas.bluehelix.com
+  The API signature should sign data with ED25519 signature after connection and sign the bytes with hex encoding.
 
-## HTTP方法
+
+## Domain name
+- Test env：https://sandbox.bluehelix.com
+- Prod env：https://baas.bluehelix.com
+
+## HTTPMethods
 GET POST
 
 ## TIMESTAMP
-访问 API 时的 UNIX EPOCH 时间戳 (精确到毫秒)
+When accessing API, the UNIX EPOCH timestamp is in milliseconds.
 
-## 完成示例
+## Complete Sample
 
-请求：
+### POST Request
 
 METHOD    | URL | TIMESTAMP
 -----------|-----------------------|----------------------
 POST |    https://sandbox.bluehelix.com/api/v1/test                   | 1580887996488
 
-参数见右：
+The request data shown on the right:：
 
 ```
 {
@@ -69,22 +74,41 @@ POST |    https://sandbox.bluehelix.com/api/v1/test                   | 15808879
   "block_height": 1000000
 }
 ```
-在进行签名之前，需要对请求参数，按照key的首字母进行排序，得到如下数据： `POST|/api/v1/test/|1580887996488|amount=100.0543&block_height=1000000&side=1&token_id=ABC&tx_hash=0x1234567890`
 
-使用您本地生成的 private_key（私钥），对数据进行ED25519签名，并对二进制结果进行 Hex 编码, 得到最终签名signature。
+Before signing in, you need to sort the request parameters according to the first letter of the key to obtain the following data `POST|/api/v1/test/|1580887996488|amount=100.0543&block_height=1000000&side=1&token_id=ABC&tx_hash=0x1234567890`
 
-在HTTP请求时，写入header，即可通过校验:
+Use your locally generated private_key to sign off the data with ED25519. Then Hex-encode the binary result to obtain the final signature.
+
+
+In the HTTP request, enter the header to bypass the verification:
+
+- BWAAS-API-KEY
+- BWAAS-API-SIGNATURE
+- BWAAS-API-TIMESTAMP
+
+### GET Request
+
+METHOD    | URL | TIMESTAMP
+-----------|-----------------------|----------------------
+GET |    https://sandbox.bluehelix.com/api/v1/test?chain=ABC                   | 1580887996488
+
+Before signing in, you need to sort the request parameters according to the first letter of the key to obtain the following data `GET|/api/v1/test?chain=ABC|1580887996488`
+
+Use your locally generated private_key to sign off the data with ED25519. Then Hex-encode the binary result to obtain the final signature.
+
+
+In the HTTP request, enter the header to bypass the verification:
 
 - BWAAS-API-KEY
 - BWAAS-API-SIGNATURE
 - BWAAS-API-TIMESTAMP
 
 
-# 接口列表
+# API List
 
-## 获取剩余地址数量
+## Count the number of unused address
 
-> 获取剩余地址数量
+> Count the number of unused address
 
 ```shell
 curl
@@ -92,7 +116,7 @@ curl
   -H "BWAAS-API-KEY: 123"
   -H "BWAAS-API-TIMESTAMP: 1580887996488"
   -H "BWAAS-API-SIGNATURE: f321da3"
-  https://sandbox.bluehelix.com/api/v1/address/count/unused
+  https://sandbox.bluehelix.com/api/v1/address/unused/count/
 ?chain=ABC
 ```
 
@@ -117,30 +141,30 @@ curl
 
 HTTP Request：
 
-`GET /v1/address/count/unused`
+`GET /v1/address/unused/count`
 
 
-请求参数：
+Request parameters：
 
-参数 | 类型| 必须| 说明
+Parameter | Type| Mandatory| Description
 -----------|-----------|-----------|-----------
-chain | string| 是|那个链
+chain | string| yes|The chain
 
-响应结果：
+Response：
 
-参数 | 类型| 说明
+Parameter | Type| Description
 -----------|-----------|-----------
-code | int| 详情见返回类型表
-msg | string | 返回内容；失败时为错误信息
-data | int | 剩余地址数量
+code | int| Please see the retruen code list
+msg | string | Returned content; error message if failed
+data | int | Number of unused address
 
 <aside class="notice">
-检查是否需要重新生成地址时使用，需要定期调用，视新增用户速度决定。建议每小时调用一次。
+It is recommended that you generate the count of unused address/addresses regularly, preferably on an hourly basis. Any increase in the number of new users will change the final count.
 </aside>
 
-## 添加充值地址
+## Add deposit address
 
-> 添加充值地址
+> Add deposit address
 
 ```shell
 curl
@@ -152,8 +176,8 @@ curl
     {
       "chain":"ABC",
       "addr_list":[
-        "111111",
-        "222222"
+        "addr_111",
+        "addr_222"
       ]
     }
   '
@@ -183,30 +207,31 @@ HTTP Request：
 `POST /v1/address/add`
 
 
-请求参数：
+Request parameters：
 
-参数 | 类型| 必须| 说明
+Parameter | Type| Mandatory| Description
 -----------|-----------|-----------|-----------
-chain | string| 是|那个链
-addr_list | []string | 是|地址列表
+chain | string| yes|The chain
+addr_list | []string | yes|list of address
 
-响应结果：
+Response:
 
-参数 | 类型| 说明
+Parameter | Type| Description
 -----------|-----------|-----------
-code | int| 详情见返回类型表
-msg | string | 返回内容；失败时为错误信息
+code | int| Please see the retruen code list
+msg | string | Returned content; error message if failed
 
 
 <aside class="notice">
-当检查到剩余地址小于特定值，比如10000时，重新生成一批地址，并调用此接口添加充值地址，建议每次添加的充值地址不超过100个，
-如果需要导入大量地址，可以多次调用此接口。对于使用tag的公链，客户端可只调用此服务添加一个充值地址即可，由服务端给来分配tag供充值使用。
+Check that the balance number of addresses is not less than the specified value. If the value is less than 1,000, please generate a new batch of addresses by calling the add deposit address. It is recommended to add no more than 100 deposit addresses per call. Should you require a larger number of addresses, please perform several add deposit requests accordingly.
+
+For Blockchain using Tag, client needs only to request for one (1) deposit address. Server will assign a unique tag to each address.
 </aside>
 
 
-## 充值到账通知
+## Deposit Notify
 
-> 充值到账通知
+> Deposit Notify
 
 ```shell
 curl
@@ -219,10 +244,10 @@ curl
         "from": "addr1",
         "to": "addr2",
         "memo":"1234",
-        "index": 1,
         "token_id": "ABC",
         "amount": "124.23",
         "tx_hash": "1234",
+        "index": 1,
         "block_height": 124,
         "block_time": 1234
     }
@@ -252,37 +277,38 @@ HTTP Request：
 
 `POST /v1/notify/deposit`
 
-请求参数：
+Request parameters:
 
-参数 | 类型| 必须| 说明
+Parameter | Type| Mandatory| Description
 -----------|-----------|-----------|-----------
-from | string | 是|从哪个地址转出来
-to | string | 是|转给那个地址
-memo| string| 可选| memo标识
-index| int | 是| 该充值所在交易中的位置
-token_id| string| 是| 币种ID
-amount| string| 是| 充值金额
-tx_hash| string|是 |交易hash
-block_height| int| 是| 区块高度
-block_time| int| 是| 区块时间（秒）
+from | string | yes|from which address
+to | string | yes|to which address
+memo| string| optional| memo
+token_id| string| yes|digital asset symbol
+amount| string| yes| deposit amount
+tx_hash| string|yes |transaction hash
+index| int | yes| he location of the deposit made
+block_height| int64| yes| block height
+block_time| int64| yes| block time (seconds)
 
+Response：
 
-响应结果：
-
-参数 | 类型| 说明
+Parameter | Type| Description
 -----------|-----------|-----------
-code | int| 详情见返回类型表
-msg | string | 返回内容；失败时为错误信息
+code | int| Please see the retruen code list
+msg | string | Returned content; error message if failed
 
 <aside class="notice">
-当有用户充值时，调用此接口，为保证充值可靠性，充值需要逐笔执行，超过1条的话可以多次调用此接口。客户端必须保证充币的真实可靠，因客户端通知错误充值带来的损失，由客户端执行者承担。
+A call deposit notice will help to ensure the user receives notification after a deposit was made. Each call caters to one (1) deposit action. 
+
+The client is responsible to provide a proof of authenticity of all deposits made. Users will incur losses caused by any incorrect notification sent by the client.
 </aside>
 
 
 
-## 获取待处理提现请求
+## Generate pending withdrawal orders
 
-> 获取待处理提现请求
+> Generate pending withdrawal orders
 
 ```shell
 curl
@@ -329,46 +355,51 @@ curl
 
 HTTP Request：
 
-`POST /v1/withdrawal/orders`
+`GET /v1/withdrawal/orders`
 
-请求参数：
+Request parameters:
 
-参数 | 类型| 必须| 说明
+Parameter | Type| Mandatory| Description
 -----------|-----------|-----------|-----------
 
+Response：
 
-响应结果：
-
-参数 | 类型| 说明
+Parameter | Type| Description
 -----------|-----------|-----------
-code | int| 详情见返回类型表
-msg | string | 返回内容；失败时为错误信息
-data | []order | 待处理提现订单列表
+code | int| Please see the retruen code list
+msg | string | Returned content; error message if failed
+data | []order | List of pending withdrawal orders
 
-order 信息：
+orderinfo：
 
-参数 | 类型| 说明
+Parameter | Type| Description
 -----------|-----------|-----------
-order_id| int64 | 订单id
-token_id| string| 提现币种
-to | string | 提现给那个地址
-memo | string | memo标记
-amount | string | 提现金额
+order_id| string | order id
+token_id| string| withdrawal currency
+to | string | withdrawal address
+memo | string | memo
+amount | string | withdrawal amount
 
 
 <aside class="notice">
-应定期轮询是否有用户提现需求 ，轮询周期建议不大于出块间隔的十分之一。如出块时间为15s，建议每1s轮询一次，出块时间为15min的话，建议15s轮询一次。为对账方便，服务端返回提币金额为净提币金额，链处理所需的手续费由客户端管理。
+A request for user's withdrawal is required. It is recommended that the number of requests should not be more than one-tenth of the interval for each block generated. 
 
-该接口每次最多返回50个未处理订单。
+If the time taken for a block to generate is 15s, it is recommended that you put in your request every 1s. 
+
+If the time taken for a block to generate is 15mins, it is recommended that you put in your request every 15s.
+
+To reconcile the assets, the net withdrawal amount is the withdrawal amount returned. The processing fee for on-chain transaction is managed by the client. 
+
+Each request generates up to 50 outstanding orders at a time.
 </aside>
 
-## 提现处理完成通知
+## Successful withdrawal notify
 
-> 提现处理完成通知
+> Successful withdrawal notify
 
 ```shell
 curl
-  -X GET
+  -X POST
   -H "BWAAS-API-KEY: 123"
   -H "BWAAS-API-TIMESTAMP: 1580887996488"
   -H "BWAAS-API-SIGNATURE: f321da3"
@@ -410,42 +441,39 @@ HTTP Request：
 
 `POST /v1/notify/withdrawal`
 
-请求参数：
+Request parameters:
 
-参数 | 类型| 必须| 说明
+Parameter | Type| Mandatory| Description
 -----------|-----------|-----------|-----------
-order_id| int64 | 是|订单id
-token_id| string| 是|提现币种
-to | string | 是|提现给那个地址
-memo | string | 是|memo标记
-amount | string | 是|提现金额
-fee | string | 是|链上消耗手续费
-tx_hash| string | 是|交易hash
-block_height|int |是|区块高度
-block_time|int |是|区块时间（秒）
+order_id| int64 | yes|order id
+token_id| string| yes| withdrawal currency
+to | string | yes|to wihich address
+memo | string | yes|memo
+amount | string | yes|withdrawal amount
+fee | string | yes|on-chain transaction fee
+tx_hash| string | yes|transaction hash
+block_height|int |yes|block height
+block_time|int |yes|block time (seconds)
 
-响应结果：
+Response：
 
-参数 | 类型| 说明
+Parameter | Type| Description
 -----------|-----------|-----------
-code | int| 详情见返回类型表
-msg | string | 返回内容；失败时为错误信息
-
-
+code | int| Please see the retruen code list
+msg | string | Returned content; error message if failed
 
 <aside class="notice">
-提币成功（提币交易已被区块链打包并确认执行成功）后调用此接口，为保证提币结果反馈可靠性，每次仅通知一笔提现处理结果。
-客服端负责保证提币执行后才调用此接口
+*After a successful withdrawal (blockchain shows the transactions on the distributed public ledger), calling for a Successful Withdrawal Notice is required. To ensure the reliability of the withdrawal result, only one withdrawal result is given at a time. It is the responsibility of the client to ensure that a request is called only after the withdrawal is executed.
 </aside>
 
 
-## 定期对账
+## Asset reconciliation
 
-> 定期对账
+> Asset verification
 
 ```shell
 curl
-  -X GET
+  -X POST
   -H "BWAAS-API-KEY: 123"
   -H "BWAAS-API-TIMESTAMP: 1580887996488"
   -H "BWAAS-API-SIGNATURE: f321da3"
@@ -483,44 +511,52 @@ HTTP Request：
 
 `POST /v1/asset/verify`
 
-请求参数：
+Request parameters:
 
-参数 | 类型| 必须| 说明
+Parameter | Type| Mandatory| Description
 -----------|-----------|-----------|-----------
-token_id| string| 是|提现币种
-total_deposit_amount | string | 是|总充值金额
-total_withdrawal_amount | string | 是|总提现金额
-total_fee_amount | string | 是|总提现链上手续费金额
-last_block_height|int |是|对账最高区块高度
+token_id| string| yes|withdrawal currency
+total_deposit_amount | string | yes|total deposit amount
+total_withdrawal_amount | string | yes|total withdrawal amount
+total_fee_amount | string | yes|total on-chain transaction fee
+last_block_height|int |yes|reconciliation of highest block height
 
-响应结果：
+Response：
 
-参数 | 类型| 说明
+Parameter | Type| Description
 -----------|-----------|-----------
-code | int| 详情见返回类型表
-msg | string | 返回内容；失败时为错误信息
+code | int| Please see the retruen code list
+msg | string | Returned content; error message if failed
 
 
 
 <aside class="notice">
-定期进行资产对账，客服端定期（每小时或者每天进行对账，客户端根据链的出块时间，交易数量合理确定）向服务端反馈特定链上资产的充提情况（截止到asset_info中指定的区块高度），如果有未处理完成的提现订单，建议处理完成后进行对账。当服务端发现客户端反馈的资产信息与服务端不一致，将返回错误，并暂停该币种的充值提现。
+Asset reconciliation is performed on a regular basis, and the customer service terminal regularly (Reconciliation is performed every hour or every day, and the client determines the transaction amount reasonably based on the block generation time of the chain) reports the deposit and withdrawal of assets on a specific chain to the server (till the block height specified in asset_info). If there are outstanding withdrawal orders, it is recommended to perform reconciliation after processing is completed.
+
+When the server finds that the asset information returned by the client is inconsistent with the server, it will return an error and suspend the deposit and withdrawal of the currency.
 </aside>
 
 # 返回值列表
 
 返回值 | 类型| 说明
 -----------|-----------|-----------
-10000 | SUCCESS| 成功
-10001 | INVALID_SIGN| 无效签名
-10002 | INVALID_APIKEY | 无效的api_key
-10004 | INVALID_CHAIN | 无效的chain
-10005 | INVALID_PARAMS | 无效的参数
-10006 | INVALID_TO_ADDRESS | 无效的充币地址
-10007 | INVALID_ORDER_ID | 无效的订单id
-10008 | INVALID_WITHDARWAL_INFO | 无效的提现信息
-10009 | REPEAT_DEPOSIT | 重复充值
-10010 | INVALID_TOKEN_ID | 无效的token_id
-10011 | ASSET_VERIFY_FAILED| 资产校验失败
-10012 | PAUSE_DEPOSIT| 充值暂停
-10013 | PAUSE_WITHDRAWAL| 提现暂停
-10014 | NEED_MEMO | 需要memo
+10000 | SUCCESS| successful
+10001 | INVALID_SIGN| invalid signature
+10002 | INVALID_APIKEY | invalid api_key
+10004 | INVALID_CHAIN | invalid chain
+10005 | INVALID_TOKEN_ID | invalid token_id
+10006 | INVALID_PARAMS | invalid paramter
+10007 | INVALID_TO_ADDRESS | invalid deposit address
+10008 | INVALID_ORDER_ID | invalid order id
+10009 | INVALID_AMOUNT | invalid amount
+10010 | INVALID_FEE | invalid fee
+10011 | INVALID_DECIMALS | invalid decimals
+10012 | INVALID_BLOCK_HEIGHT | invalid block height
+10013 | INVALID_BLOCK_TIME | invalid block time
+10014 | INVALID_TXHASH | invalid tx hash
+10015 | INVALID_INDEX | invalid tx index
+10016 | NETWORK_ERROR | network error
+10017 | REPEAT_DEPOSIT | repeat deposit
+10011 | ASSET_VERIFY_FAILED| asset verification failed
+10012 | DEPOSIT_SUSPENDED| deposit suspended
+10013 | WITHDRAWAL_SUSPENDED| withdrawal suspended
