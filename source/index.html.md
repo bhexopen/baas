@@ -39,6 +39,7 @@ IP地址 | 100.100.100.100 （用作IP白名单限制）
 提供4种编程语言（Python, JavaScript, Golang, JAVA)的用户端代码供用户使用 [https://github.com/bhexopen/baas/clients] (https://github.com/bhexopen/baas/clients)。
 
 # API签名认证
+  签名前准备的数据如下： HTTP_METHOD + | + HTTP_REQUEST_PATH + | + TIMESTAMP + | + PARAMS 连接完成后，对数据进行 ED25519 签名，签名后的 bytes 进行 Hex 编码。
 
 ## 域名
 - 测试环境：https://sandbox.bluehelix.com
@@ -52,7 +53,7 @@ GET POST
 
 ## 完成示例
 
-请求：
+### POST请求
 
 METHOD    | URL | TIMESTAMP
 -----------|-----------------------|----------------------
@@ -69,15 +70,32 @@ POST |    https://sandbox.bluehelix.com/api/v1/test                   | 15808879
   "block_height": 1000000
 }
 ```
-在进行签名之前，需要对请求参数，按照key的首字母进行排序，得到如下数据： `POST|/api/v1/test/|1580887996488|amount=100.0543&block_height=1000000&side=1&token_id=ABC&tx_hash=0x1234567890`
+在进行签名之前，需要对请求参数，按照key的首字母进行排序，得到如下数据： `POST|/api/v1/test|1580887996488|amount=100.0543&block_height=1000000&side=1&token_id=ABC&tx_hash=0x1234567890`
 
-使用您本地生成的 private_key（私钥），对数据进行ED25519签名，并对二进制结果进行 Hex 编码, 得到最终签名signature。
+使用您本地生成的 private_key（私钥），对数据进行ED25519签名，并对签名后的bytes进行 Hex 编码, 得到最终签名signature。
 
 在HTTP请求时，写入header，即可通过校验:
 
 - BWAAS-API-KEY
 - BWAAS-API-SIGNATURE
 - BWAAS-API-TIMESTAMP
+
+### GET请求
+
+METHOD    | URL | TIMESTAMP
+-----------|-----------------------|----------------------
+GET |    https://sandbox.bluehelix.com/api/v1/test?chain=ABC                   | 1580887996488
+
+在进行签名之前，需要对请求参数，按照key的首字母进行排序，得到如下数据： `GET|/api/v1/test?chain=ABC|1580887996488`
+
+使用您本地生成的 private_key（私钥），对数据进行ED25519签名，并对签名后的bytes进行 Hex 编码, 得到最终签名signature。
+
+在HTTP请求时，写入header，即可通过校验:
+
+- BWAAS-API-KEY
+- BWAAS-API-SIGNATURE
+- BWAAS-API-TIMESTAMP
+  
 
 
 # 接口列表
@@ -92,7 +110,7 @@ curl
   -H "BWAAS-API-KEY: 123"
   -H "BWAAS-API-TIMESTAMP: 1580887996488"
   -H "BWAAS-API-SIGNATURE: f321da3"
-  https://sandbox.bluehelix.com/api/v1/address/count/unused
+  https://sandbox.bluehelix.com/api/v1/address/unused/count/
 ?chain=ABC
 ```
 
@@ -117,7 +135,7 @@ curl
 
 HTTP Request：
 
-`GET /v1/address/count/unused`
+`GET /v1/address/unused/count`
 
 
 请求参数：
@@ -152,8 +170,8 @@ curl
     {
       "chain":"ABC",
       "addr_list":[
-        "111111",
-        "222222"
+        "addr_111",
+        "addr_222"
       ]
     }
   '
@@ -199,8 +217,10 @@ msg | string | 返回内容；失败时为错误信息
 
 
 <aside class="notice">
-当检查到剩余地址小于特定值，比如10000时，重新生成一批地址，并调用此接口添加充值地址，建议每次添加的充值地址不超过100个，
-如果需要导入大量地址，可以多次调用此接口。对于使用tag的公链，客户端可只调用此服务添加一个充值地址即可，由服务端给来分配tag供充值使用。
+当检查到剩余地址小于特定值，比如1000时，重新生成一批地址，并调用此接口添加充值地址，建议每次添加的充值地址不超过100个，
+如果需要导入大量地址，可以多次调用此接口。
+
+对于使用memo的公链，客户端可只调用此服务添加一个充值地址即可，由服务端给来分配memo供充值使用。
 </aside>
 
 
@@ -219,10 +239,10 @@ curl
         "from": "addr1",
         "to": "addr2",
         "memo":"1234",
-        "index": 1,
         "token_id": "ABC",
         "amount": "124.23",
         "tx_hash": "1234",
+        "index": 1,
         "block_height": 124,
         "block_time": 1234
     }
@@ -259,12 +279,12 @@ HTTP Request：
 from | string | 是|从哪个地址转出来
 to | string | 是|转给那个地址
 memo| string| 可选| memo标识
-index| int | 是| 该充值所在交易中的位置
 token_id| string| 是| 币种ID
 amount| string| 是| 充值金额
 tx_hash| string|是 |交易hash
-block_height| int| 是| 区块高度
-block_time| int| 是| 区块时间（秒）
+index| int | 是| 该充值所在交易中的位置
+block_height| int64| 是| 区块高度
+block_time| int64| 是| 区块时间（秒）
 
 
 响应结果：
@@ -275,7 +295,9 @@ code | int| 详情见返回类型表
 msg | string | 返回内容；失败时为错误信息
 
 <aside class="notice">
-当有用户充值时，调用此接口，为保证充值可靠性，充值需要逐笔执行，超过1条的话可以多次调用此接口。客户端必须保证充币的真实可靠，因客户端通知错误充值带来的损失，由客户端执行者承担。
+当有用户充值时，调用此接口，为保证充值可靠性，充值需要逐笔执行，超过1条的话可以多次调用此接口。
+
+客户端必须保证充币的真实可靠，因客户端通知错误充值带来的损失，由客户端执行者承担。
 </aside>
 
 
@@ -329,7 +351,7 @@ curl
 
 HTTP Request：
 
-`POST /v1/withdrawal/orders`
+`GET /v1/withdrawal/orders`
 
 请求参数：
 
@@ -357,7 +379,11 @@ amount | string | 提现金额
 
 
 <aside class="notice">
-应定期轮询是否有用户提现需求 ，轮询周期建议不大于出块间隔的十分之一。如出块时间为15s，建议每1s轮询一次，出块时间为15min的话，建议15s轮询一次。为对账方便，服务端返回提币金额为净提币金额，链处理所需的手续费由客户端管理。
+应定期轮询是否有用户提现需求 ，轮询周期建议不大于出块间隔的十分之一。
+
+如出块时间为15s，建议每1s轮询一次，出块时间为15min的话，建议15s轮询一次。
+
+为对账方便，服务端返回提币金额为净提币金额，链处理所需的手续费由客户端管理。
 
 该接口每次最多返回50个未处理订单。
 </aside>
@@ -368,7 +394,7 @@ amount | string | 提现金额
 
 ```shell
 curl
-  -X GET
+  -X POST
   -H "BWAAS-API-KEY: 123"
   -H "BWAAS-API-TIMESTAMP: 1580887996488"
   -H "BWAAS-API-SIGNATURE: f321da3"
@@ -414,7 +440,7 @@ HTTP Request：
 
 参数 | 类型| 必须| 说明
 -----------|-----------|-----------|-----------
-order_id| int64 | 是|订单id
+order_id| string | 是|订单id
 token_id| string| 是|提现币种
 to | string | 是|提现给那个地址
 memo | string | 是|memo标记
@@ -445,7 +471,7 @@ msg | string | 返回内容；失败时为错误信息
 
 ```shell
 curl
-  -X GET
+  -X POST
   -H "BWAAS-API-KEY: 123"
   -H "BWAAS-API-TIMESTAMP: 1580887996488"
   -H "BWAAS-API-SIGNATURE: f321da3"
@@ -503,7 +529,9 @@ msg | string | 返回内容；失败时为错误信息
 
 
 <aside class="notice">
-定期进行资产对账，客服端定期（每小时或者每天进行对账，客户端根据链的出块时间，交易数量合理确定）向服务端反馈特定链上资产的充提情况（截止到asset_info中指定的区块高度），如果有未处理完成的提现订单，建议处理完成后进行对账。当服务端发现客户端反馈的资产信息与服务端不一致，将返回错误，并暂停该币种的充值提现。
+定期进行资产对账，客服端定期（每小时或者每天进行对账，客户端根据链的出块时间，交易数量合理确定）向服务端反馈特定链上资产的充提情况（截止到asset_info中指定的区块高度）。
+
+如果有未处理完成的提现订单，建议处理完成后进行对账。当服务端发现客户端反馈的资产信息与服务端不一致，将返回错误，并暂停该币种的充值提现。
 </aside>
 
 # 返回值列表
@@ -514,13 +542,19 @@ msg | string | 返回内容；失败时为错误信息
 10001 | INVALID_SIGN| 无效签名
 10002 | INVALID_APIKEY | 无效的api_key
 10004 | INVALID_CHAIN | 无效的chain
-10005 | INVALID_PARAMS | 无效的参数
-10006 | INVALID_TO_ADDRESS | 无效的充币地址
-10007 | INVALID_ORDER_ID | 无效的订单id
-10008 | INVALID_WITHDARWAL_INFO | 无效的提现信息
-10009 | REPEAT_DEPOSIT | 重复充值
-10010 | INVALID_TOKEN_ID | 无效的token_id
+10005 | INVALID_TOKEN_ID | 无效的token_id
+10006 | INVALID_PARAMS | 无效的参数
+10007 | INVALID_TO_ADDRESS | 无效的充币地址
+10008 | INVALID_ORDER_ID | 无效的订单id
+10009 | INVALID_AMOUNT | 无效的amount值
+10010 | INVALID_FEE | 无效的fee值
+10011 | INVALID_DECIMALS | 无效的精度
+10012 | INVALID_BLOCK_HEIGHT | 无效的区块高度
+10013 | INVALID_BLOCK_TIME | 无效的区块时间
+10014 | INVALID_TXHASH | 无效的tx_hash
+10015 | INVALID_INDEX | 无效的交易index
+10016 | NETWORK_ERROR | 网络错误
+10017 | REPEAT_DEPOSIT | 重复充值
 10011 | ASSET_VERIFY_FAILED| 资产校验失败
-10012 | PAUSE_DEPOSIT| 充值暂停
-10013 | PAUSE_WITHDRAWAL| 提现暂停
-10014 | NEED_MEMO | 需要memo
+10012 | DEPOSIT_SUSPENDED| 充值暂停
+10013 | WITHDRAWAL_SUSPENDED| 提现暂停
