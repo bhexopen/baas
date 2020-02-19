@@ -147,7 +147,7 @@ Request parameters：
 
 Parameter | Type| Mandatory| Description
 -----------|-----------|-----------|-----------
-chain | string| yes|The chain
+chain | string| yes|The chain,use mainnet token
 
 Response：
 
@@ -210,7 +210,7 @@ Request parameters：
 
 Parameter | Type| Mandatory| Description
 -----------|-----------|-----------|-----------
-chain | string| yes|The chain
+chain | string| yes|The chain,use mainne token
 addr_list | []string | yes|list of address
 
 Response:
