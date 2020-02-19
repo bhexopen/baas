@@ -32,24 +32,23 @@ BLUEHELIX BAAS 提供REST风格的API（HTTPS + JSON)，方便BHOP客户自助�
 币种ID | ABC
 所属公链| ABC
 代币精度| 8
-代币总量| 10 billion
+代币总量| 100亿
 IP地址 | 100.100.100.100 （用作IP白名单限制）
 
 ## 客户端代码示例
-提供4种编程语言（Python, JavaScript, Golang, JAVA)的用户端代码供用户使用 [https://github.com/bhexopen/baas/clients] (https://github.com/bhexopen/baas/clients)。
+提供4种编程语言（Python, JavaScript, Golang, JAVA)的用户端代码供用户使用 [https://github.com/bhexopen/baas/clients] (https://github.com/bhexopen/baas)。
 
 # API签名认证
   签名前准备的数据如下： HTTP_METHOD + | + HTTP_REQUEST_PATH + | + TIMESTAMP + | + PARAMS 连接完成后，对数据进行 ED25519 签名，签名后的 bytes 进行 Hex 编码。
 
 ## 域名
-- 测试环境：https://sandbox.bluehelix.com
 - 正式环境：https://baas.bluehelix.com
 
 ## HTTP方法
 GET POST
 
 ## TIMESTAMP
-访问 API 时的 UNIX EPOCH 时间戳 (精确到毫秒)
+访问 API 时的 UNIX EPOCH 时间戳 (精确到毫秒), 过期时间120000ms。
 
 ## 完成示例
 
@@ -57,7 +56,7 @@ GET POST
 
 METHOD    | URL | TIMESTAMP
 -----------|-----------------------|----------------------
-POST |    https://sandbox.bluehelix.com/api/v1/test                   | 1580887996488
+POST |    https://baas.bluehelix.com/api/v1/test                   | 1580887996488
 
 参数见右：
 
@@ -84,7 +83,7 @@ POST |    https://sandbox.bluehelix.com/api/v1/test                   | 15808879
 
 METHOD    | URL | TIMESTAMP
 -----------|-----------------------|----------------------
-GET |    https://sandbox.bluehelix.com/api/v1/test?chain=ABC                   | 1580887996488
+GET |    https://baas.bluehelix.com/api/v1/test?chain=ABC                   | 1580887996488
 
 在进行签名之前，需要对请求参数，按照key的首字母进行排序，得到如下数据： `GET|/api/v1/test?chain=ABC|1580887996488`
 
@@ -110,7 +109,7 @@ curl
   -H "BWAAS-API-KEY: 123"
   -H "BWAAS-API-TIMESTAMP: 1580887996488"
   -H "BWAAS-API-SIGNATURE: f321da3"
-  https://sandbox.bluehelix.com/api/v1/address/unused/count/
+  https://baas.bluehelix.com/api/v1/address/unused/count/
 ?chain=ABC
 ```
 
@@ -135,7 +134,7 @@ curl
 
 HTTP Request：
 
-`GET /v1/address/unused/count`
+`GET /api/v1/address/unused/count`
 
 
 请求参数：
@@ -175,7 +174,7 @@ curl
       ]
     }
   '
-  https://sandbox.bluehelix.com/api/v1/address/add
+  https://baas.bluehelix.com/api/v1/address/add
 ```
 
 ```golang
@@ -198,7 +197,7 @@ curl
 
 HTTP Request：
 
-`POST /v1/address/add`
+`POST /api//v1/address/add`
 
 
 请求参数：
@@ -236,18 +235,18 @@ curl
   -H "BWAAS-API-SIGNATURE: f321da3"
   -- data '
     {
+        "token_id": "ABC",
         "from": "addr1",
         "to": "addr2",
         "memo":"1234",
-        "token_id": "ABC",
         "amount": "124.23",
         "tx_hash": "1234",
-        "index": 1,
-        "block_height": 124,
-        "block_time": 1234
+        "index": "1",
+        "block_height": "124",
+        "block_time": "1234"
     }
   '
-  https://sandbox.bluehelix.com/api/v1/notify/deposit
+  https://baas.bluehelix.com/api/v1/notify/deposit
 ```
 
 ```golang
@@ -270,21 +269,21 @@ curl
 
 HTTP Request：
 
-`POST /v1/notify/deposit`
+`POST /api//v1/notify/deposit`
 
 请求参数：
 
 参数 | 类型| 必须| 说明
 -----------|-----------|-----------|-----------
+token_id| string| 是| 币种ID
 from | string | 是|从哪个地址转出来
 to | string | 是|转给那个地址
 memo| string| 可选| memo标识
-token_id| string| 是| 币种ID
 amount| string| 是| 充值金额
 tx_hash| string|是 |交易hash
-index| int | 是| 该充值所在交易中的位置
-block_height| int64| 是| 区块高度
-block_time| int64| 是| 区块时间（秒）
+index| string | 是| 该充值所在交易中的位置
+block_height| string| 是| 区块高度
+block_time| string| 是| 区块时间（秒）
 
 
 响应结果：
@@ -312,7 +311,7 @@ curl
   -H "BWAAS-API-KEY: 123"
   -H "BWAAS-API-TIMESTAMP: 1580887996488"
   -H "BWAAS-API-SIGNATURE: f321da3"
-  https://sandbox.bluehelix.com/api/v1/withdrawal/orders
+  https://baas.bluehelix.com/api/v1/withdrawal/orders
 ```
 
 ```golang
@@ -332,14 +331,14 @@ curl
     "msg": "success",
     "data"::[
         {
-            "order_id": 1234,
+            "order_id": "1234",
             "token_id":"ABC",
             "to": "bhexaddr1",
             "memo": "bhexmemo",
             "amount": "12.34"
         },
         {
-            "order_id": 2345,
+            "order_id": "2345",
             "token_id":"ABC",
             "to": "bhexaddr1",
             "memo": "bhexmemo",
@@ -351,7 +350,7 @@ curl
 
 HTTP Request：
 
-`GET /v1/withdrawal/orders`
+`GET /api/v1/withdrawal/orders`
 
 请求参数：
 
@@ -371,7 +370,7 @@ order 信息：
 
 参数 | 类型| 说明
 -----------|-----------|-----------
-order_id| int64 | 订单id
+order_id| string | 订单id
 token_id| string| 提现币种
 to | string | 提现给那个地址
 memo | string | memo标记
@@ -400,18 +399,17 @@ curl
   -H "BWAAS-API-SIGNATURE: f321da3"
   --data '
   {
-    "order_id": 1234,
-    "token_id": "ABV",
+    "order_id": "1234",
+    "token_id": "ABC",
     "to": "bhexaddr1",
     "memo": "bhexmemo",
     "amount": "12.34",
-    "fee": "0.001",
     "tx_hash": "0x5f99810a4154379e5b7951419a77250f020be54b78acb9a8747ff8b0ec75769d",
     "block_height": 6581548,
     "block_time": 1540480255
   }
   '
-  https://sandbox.bluehelix.com/api/v1/notify/withdrawal
+  https://baas.bluehelix.com/api/v1/notify/withdrawal
 ```
 
 ```golang
@@ -434,7 +432,7 @@ curl
 
 HTTP Request：
 
-`POST /v1/notify/withdrawal`
+`POST /api//v1/notify/withdrawal`
 
 请求参数：
 
@@ -445,7 +443,6 @@ token_id| string| 是|提现币种
 to | string | 是|提现给那个地址
 memo | string | 是|memo标记
 amount | string | 是|提现金额
-fee | string | 是|链上消耗手续费
 tx_hash| string | 是|交易hash
 block_height|int |是|区块高度
 block_time|int |是|区块时间（秒）
@@ -477,14 +474,13 @@ curl
   -H "BWAAS-API-SIGNATURE: f321da3"
   --data '
   {
-    "token_id": "ABV",
+    "token_id": "ABC",
     "total_deposit_amount": "100000.567",
     "total_withdrawal_amount": "10000",
-    "total_fee_amount": "100",
-    "last_block_height": 100000
+    "last_block_height": "100000"
   }
   '
-  https://sandbox.bluehelix.com/api/v1/asset/verify
+  https://baas.bluehelix.com/api/v1/asset/verify
 ```
 
 ```golang
@@ -507,7 +503,7 @@ curl
 
 HTTP Request：
 
-`POST /v1/asset/verify`
+`POST /api//v1/asset/verify`
 
 请求参数：
 
@@ -516,8 +512,7 @@ HTTP Request：
 token_id| string| 是|提现币种
 total_deposit_amount | string | 是|总充值金额
 total_withdrawal_amount | string | 是|总提现金额
-total_fee_amount | string | 是|总提现链上手续费金额
-last_block_height|int |是|对账最高区块高度
+last_block_height|string |是|对账最高区块高度
 
 响应结果：
 
@@ -547,14 +542,14 @@ msg | string | 返回内容；失败时为错误信息
 10007 | INVALID_TO_ADDRESS | 无效的充币地址
 10008 | INVALID_ORDER_ID | 无效的订单id
 10009 | INVALID_AMOUNT | 无效的amount值
-10010 | INVALID_FEE | 无效的fee值
-10011 | INVALID_DECIMALS | 无效的精度
-10012 | INVALID_BLOCK_HEIGHT | 无效的区块高度
-10013 | INVALID_BLOCK_TIME | 无效的区块时间
-10014 | INVALID_TXHASH | 无效的tx_hash
-10015 | INVALID_INDEX | 无效的交易index
-10016 | NETWORK_ERROR | 网络错误
-10017 | REPEAT_DEPOSIT | 重复充值
-10018 | ASSET_VERIFY_FAILED| 资产校验失败
-10019 | DEPOSIT_SUSPENDED| 充值暂停
-10020 | WITHDRAWAL_SUSPENDED| 提现暂停
+10010 | INVALID_DECIMALS | 无效的精度
+10011 | INVALID_BLOCK_HEIGHT | 无效的区块高度
+10012 | INVALID_BLOCK_TIME | 无效的区块时间
+10013 | INVALID_TXHASH | 无效的tx_hash
+10014 | INVALID_INDEX | 无效的交易index
+10015 | NETWORK_ERROR | 网络错误
+10016 | REPEAT_DEPOSIT | 重复充值
+10017 | ASSET_VERIFY_FAILED| 资产校验失败
+10018 | DEPOSIT_SUSPENDED| 充值暂停
+10019 | WITHDRAWAL_SUSPENDED| 提现暂停
+10020 | TIMESTAMP_EXPIRED| 时间戳过期

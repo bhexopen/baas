@@ -32,12 +32,12 @@ Parameter|Value
 Digital Asset Symbol | ABC
 Explorer| ABC
 Decimals| 8
-Total Supply| 100亿
+Total Supply| 10 billion
 IP address | 100.100.100.100  (used as IP whitelist restriction)
 
 ## Client Sample
 Developer can code using any one of the following programming languages (Python, JavaScript, Golang, JAVA) 
-https://github.com/bhexopen/baas/clients.
+https://github.com/bhexopen/baas.
 
 # API Signature Authentication
   The data needs to be signed as the following: HTTP_METHOD + | + HTTP_REQUEST_PATH + | + TIMESTAMP + | + PARAMS
@@ -46,14 +46,13 @@ https://github.com/bhexopen/baas/clients.
 
 
 ## Domain name
-- Test env：https://sandbox.bluehelix.com
 - Prod env：https://baas.bluehelix.com
 
 ## HTTPMethods
 GET POST
 
 ## TIMESTAMP
-When accessing API, the UNIX EPOCH timestamp is in milliseconds.
+When accessing API, the UNIX EPOCH timestamp(ms), expires in 120000ms.
 
 ## Complete Sample
 
@@ -241,10 +240,10 @@ curl
   -H "BWAAS-API-SIGNATURE: f321da3"
   -- data '
     {
+        "token_id": "ABC",
         "from": "addr1",
         "to": "addr2",
         "memo":"1234",
-        "token_id": "ABC",
         "amount": "124.23",
         "tx_hash": "1234",
         "index": 1,
@@ -281,10 +280,10 @@ Request parameters:
 
 Parameter | Type| Mandatory| Description
 -----------|-----------|-----------|-----------
+token_id| string| yes|digital asset symbol
 from | string | yes|from which address
 to | string | yes|to which address
 memo| string| optional| memo
-token_id| string| yes|digital asset symbol
 amount| string| yes| deposit amount
 tx_hash| string|yes |transaction hash
 index| int | yes| he location of the deposit made
@@ -336,14 +335,14 @@ curl
     "msg": "success",
     "data"::[
         {
-            "order_id": 1234,
+            "order_id": "1234",
             "token_id":"ABC",
             "to": "bhexaddr1",
             "memo": "bhexmemo",
             "amount": "12.34"
         },
         {
-            "order_id": 2345,
+            "order_id": "2345",
             "token_id":"ABC",
             "to": "bhexaddr1",
             "memo": "bhexmemo",
@@ -405,12 +404,11 @@ curl
   -H "BWAAS-API-SIGNATURE: f321da3"
   --data '
   {
-    "order_id": 1234,
-    "token_id": "ABV",
+    "order_id": "1234",
+    "token_id": "ABC",
     "to": "bhexaddr1",
     "memo": "bhexmemo",
     "amount": "12.34",
-    "fee": "0.001",
     "tx_hash": "0x5f99810a4154379e5b7951419a77250f020be54b78acb9a8747ff8b0ec75769d",
     "block_height": 6581548,
     "block_time": 1540480255
@@ -445,12 +443,11 @@ Request parameters:
 
 Parameter | Type| Mandatory| Description
 -----------|-----------|-----------|-----------
-order_id| int64 | yes|order id
+order_id| string | yes|order id
 token_id| string| yes| withdrawal currency
 to | string | yes|to wihich address
 memo | string | yes|memo
 amount | string | yes|withdrawal amount
-fee | string | yes|on-chain transaction fee
 tx_hash| string | yes|transaction hash
 block_height|int |yes|block height
 block_time|int |yes|block time (seconds)
@@ -467,7 +464,7 @@ msg | string | Returned content; error message if failed
 </aside>
 
 
-## Asset reconciliation
+## Asset verification
 
 > Asset verification
 
@@ -479,11 +476,11 @@ curl
   -H "BWAAS-API-SIGNATURE: f321da3"
   --data '
   {
-    "token_id": "ABV",
+    "token_id": "ABC",
     "total_deposit_amount": "100000.567",
     "total_withdrawal_amount": "10000",
     "total_fee_amount": "100",
-    "last_block_height": 100000
+    "last_block_height": "100000"
   }
   '
   https://sandbox.bluehelix.com/api/v1/asset/verify
@@ -519,7 +516,7 @@ token_id| string| yes|withdrawal currency
 total_deposit_amount | string | yes|total deposit amount
 total_withdrawal_amount | string | yes|total withdrawal amount
 total_fee_amount | string | yes|total on-chain transaction fee
-last_block_height|int |yes|reconciliation of highest block height
+last_block_height|string |yes|verification of highest block height
 
 Response：
 
@@ -531,7 +528,7 @@ msg | string | Returned content; error message if failed
 
 
 <aside class="notice">
-Asset reconciliation is performed on a regular basis, and the customer service terminal regularly (Reconciliation is performed every hour or every day, and the client determines the transaction amount reasonably based on the block generation time of the chain) reports the deposit and withdrawal of assets on a specific chain to the server (till the block height specified in asset_info). If there are outstanding withdrawal orders, it is recommended to perform reconciliation after processing is completed.
+Asset verification is performed on a regular basis, and the customer service terminal regularly (Reconciliation is performed every hour or every day, and the client determines the transaction amount reasonably based on the block generation time of the chain) reports the deposit and withdrawal of assets on a specific chain to the server (till the block height specified in asset_info). If there are outstanding withdrawal orders, it is recommended to perform reconciliation after processing is completed.
 
 When the server finds that the asset information returned by the client is inconsistent with the server, it will return an error and suspend the deposit and withdrawal of the currency.
 </aside>
@@ -549,14 +546,14 @@ Code |Type| Description
 10007 | INVALID_TO_ADDRESS | invalid deposit address
 10008 | INVALID_ORDER_ID | invalid order id
 10009 | INVALID_AMOUNT | invalid amount
-10010 | INVALID_FEE | invalid fee
-10011 | INVALID_DECIMALS | invalid decimals
-10012 | INVALID_BLOCK_HEIGHT | invalid block height
-10013 | INVALID_BLOCK_TIME | invalid block time
-10014 | INVALID_TXHASH | invalid tx hash
-10015 | INVALID_INDEX | invalid tx index
-10016 | NETWORK_ERROR | network error
-10017 | REPEAT_DEPOSIT | repeat deposit
-10018 | ASSET_VERIFY_FAILED| asset verification failed
-10019 | DEPOSIT_SUSPENDED| deposit suspended
-10020 | WITHDRAWAL_SUSPENDED| withdrawal suspended
+10010 | INVALID_DECIMALS | invalid decimals
+10011 | INVALID_BLOCK_HEIGHT | invalid block height
+10012 | INVALID_BLOCK_TIME | invalid block time
+10013 | INVALID_TXHASH | invalid tx hash
+10014 | INVALID_INDEX | invalid tx index
+10015 | NETWORK_ERROR | network error
+10016 | REPEAT_DEPOSIT | repeat deposit
+10017 | ASSET_VERIFY_FAILED| asset verification failed
+10018 | DEPOSIT_SUSPENDED| deposit suspended
+10019 | WITHDRAWAL_SUSPENDED| withdrawal suspended
+10020 | TIMESTAMP_EXPIRED| timestamp expired
