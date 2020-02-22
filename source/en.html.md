@@ -60,7 +60,7 @@ When accessing API, the UNIX EPOCH timestamp(ms), expires in 120000ms.
 
 METHOD    | URL | TIMESTAMP
 -----------|-----------------------|----------------------
-POST |    https://sandbox.bluehelix.com/api/v1/test                   | 1580887996488
+POST |    https://baas.bluehelix.com/api/v1/test                   | 1580887996488
 
 The request data shown on the right:：
 
@@ -89,7 +89,7 @@ In the HTTP request, enter the header to bypass the verification:
 
 METHOD    | URL | TIMESTAMP
 -----------|-----------------------|----------------------
-GET |    https://sandbox.bluehelix.com/api/v1/test?chain=ABC                   | 1580887996488
+GET |    https://baas.bluehelix.com/api/v1/test?chain=ABC                   | 1580887996488
 
 Before signing in, you need to sort the request parameters according to the first letter of the key to obtain the following data `GET|/api/v1/test?chain=ABC|1580887996488`
 
@@ -115,7 +115,7 @@ curl
   -H "BWAAS-API-KEY: 123"
   -H "BWAAS-API-TIMESTAMP: 1580887996488"
   -H "BWAAS-API-SIGNATURE: f321da3"
-  https://sandbox.bluehelix.com/api/v1/address/unused/count/
+  https://baas.bluehelix.com/api/v1/address/unused/count/
 ?chain=ABC
 ```
 
@@ -140,7 +140,7 @@ curl
 
 HTTP Request：
 
-`GET /v1/address/unused/count`
+`GET /api/v1/address/unused/count?chain=ABC`
 
 
 Request parameters：
@@ -180,7 +180,7 @@ curl
       ]
     }
   '
-  https://sandbox.bluehelix.com/api/v1/address/add
+  https://baas.bluehelix.com/api/v1/address/add
 ```
 
 ```golang
@@ -203,7 +203,7 @@ curl
 
 HTTP Request：
 
-`POST /v1/address/add`
+`POST /api/v1/address/add`
 
 
 Request parameters：
@@ -251,7 +251,7 @@ curl
         "block_time": 1234
     }
   '
-  https://sandbox.bluehelix.com/api/v1/notify/deposit
+  https://baas.bluehelix.com/api/v1/notify/deposit
 ```
 
 ```golang
@@ -274,7 +274,7 @@ curl
 
 HTTP Request：
 
-`POST /v1/notify/deposit`
+`POST /api/v1/notify/deposit`
 
 Request parameters:
 
@@ -315,7 +315,7 @@ curl
   -H "BWAAS-API-KEY: 123"
   -H "BWAAS-API-TIMESTAMP: 1580887996488"
   -H "BWAAS-API-SIGNATURE: f321da3"
-  https://sandbox.bluehelix.com/api/v1/withdrawal/orders
+  https://baas.bluehelix.com/api/v1/withdrawal/orders?chain=ABC
 ```
 
 ```golang
@@ -354,12 +354,14 @@ curl
 
 HTTP Request：
 
-`GET /v1/withdrawal/orders`
+`GET /api/v1/withdrawal/orders?chain=ABC`
 
 Request parameters:
 
 Parameter | Type| Mandatory| Description
 -----------|-----------|-----------|-----------
+chain | string| yes|The chain,use mainnet token
+
 
 Response：
 
@@ -414,7 +416,7 @@ curl
     "block_time": 1540480255
   }
   '
-  https://sandbox.bluehelix.com/api/v1/notify/withdrawal
+  https://baas.bluehelix.com/api/v1/notify/withdrawal
 ```
 
 ```golang
@@ -437,7 +439,7 @@ curl
 
 HTTP Request：
 
-`POST /v1/notify/withdrawal`
+`POST /api/v1/notify/withdrawal`
 
 Request parameters:
 
@@ -483,7 +485,7 @@ curl
     "last_block_height": "100000"
   }
   '
-  https://sandbox.bluehelix.com/api/v1/asset/verify
+  https://baas.bluehelix.com/api/v1/asset/verify
 ```
 
 ```golang
@@ -506,7 +508,7 @@ curl
 
 HTTP Request：
 
-`POST /v1/asset/verify`
+`POST /api/v1/asset/verify`
 
 Request parameters:
 

@@ -197,7 +197,7 @@ curl
 
 HTTP Request：
 
-`POST /api//v1/address/add`
+`POST /api/v1/address/add`
 
 
 请求参数：
@@ -269,7 +269,7 @@ curl
 
 HTTP Request：
 
-`POST /api//v1/notify/deposit`
+`POST /api/v1/notify/deposit`
 
 请求参数：
 
@@ -350,13 +350,13 @@ curl
 
 HTTP Request：
 
-`GET /api/v1/withdrawal/orders`
+`GET /api/v1/withdrawal/orders?chain=ABC`
 
 请求参数：
 
 参数 | 类型| 必须| 说明
 -----------|-----------|-----------|-----------
-
+chain | string| 是|那个链,使用主网代币
 
 响应结果：
 
@@ -432,7 +432,7 @@ curl
 
 HTTP Request：
 
-`POST /api//v1/notify/withdrawal`
+`POST /api/v1/notify/withdrawal`
 
 请求参数：
 
@@ -503,7 +503,7 @@ curl
 
 HTTP Request：
 
-`POST /api//v1/asset/verify`
+`POST /api/v1/asset/verify`
 
 请求参数：
 
