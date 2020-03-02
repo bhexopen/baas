@@ -12,7 +12,7 @@ Bluehelix Baas Api Client Demo
     - python client.py
 
 * Go
-    - go run go/client.go
+    - go run client.go
 
 * Js
     - npm install
