@@ -36,7 +36,7 @@ BLUEHELIX BAAS 提供REST风格的API（HTTPS + JSON)，方便BHOP客户自助�
 IP地址 | 100.100.100.100 （用作IP白名单限制）
 
 ## 客户端代码示例
-提供4种编程语言（Python, JavaScript, Golang, JAVA)的用户端代码供用户使用 [https://github.com/bhexopen/baas/clients] (https://github.com/bhexopen/baas)。
+提供4种编程语言（Python, Golang, Java)的用户端代码供用户使用 [https://github.com/bhexopen/baas/clients] (https://github.com/bhexopen/baas)。
 
 # API签名认证
   签名前准备的数据如下： HTTP_METHOD + | + HTTP_REQUEST_PATH + | + TIMESTAMP + | + PARAMS 连接完成后，对数据进行 ED25519 签名，签名后的 bytes 进行 Hex 编码。
