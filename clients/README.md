@@ -1,8 +1,8 @@
-Bluehelix Baas Api Client Demo
+Bluehelix Baas API Client Demo
 
 ## Requirements:
 
-* Contact bluehelix dev team to get keys
+* Contact bluehelix dev team to get api_key
 
 ## Execute:
 
@@ -14,6 +14,6 @@ Bluehelix Baas Api Client Demo
 * Go
     - go run client.go
 
-* Js
-    - npm install
-    - node client.js
+* Java 
+    - JDK 1.8
+    - gradle build
