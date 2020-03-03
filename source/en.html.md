@@ -36,7 +36,7 @@ Total Supply| 10 billion
 IP address | 100.100.100.100  (used as IP whitelist restriction)
 
 ## Client Sample
-Developer can code using any one of the following programming languages (Python, JavaScript, Golang, JAVA) 
+Developer can code using any one of the following programming languages (Python, Golang, Java) 
 https://github.com/bhexopen/baas.
 
 # API Signature Authentication
