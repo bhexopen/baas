@@ -559,3 +559,4 @@ Code |Type| Description
 10018 | DEPOSIT_SUSPENDED| deposit suspended
 10019 | WITHDRAWAL_SUSPENDED| withdrawal suspended
 10020 | TIMESTAMP_EXPIRED| timestamp expired
+10021 | MEMO_REQUIRED| memo required
