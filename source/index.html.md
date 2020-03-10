@@ -461,6 +461,71 @@ msg | string | 返回内容；失败时为错误信息
 客服端负责保证提币执行后才调用此接口
 </aside>
 
+## 提现处理失败通知
+
+> 提现处理失败通知
+
+```shell
+curl
+  -X POST
+  -H "BWAAS-API-KEY: 123"
+  -H "BWAAS-API-TIMESTAMP: 1580887996488"
+  -H "BWAAS-API-SIGNATURE: f321da3"
+  --data '
+  {
+    "order_id": "1234",
+    "token_id": "ABC",
+    "reason": "invalid address"
+  }
+  '
+  https://baas.bluehelix.com/api/v1/notify/failed
+```
+
+```golang
+```
+
+```python
+```
+
+```javascript
+```
+
+> 返回结果：
+
+```json
+{
+    "code": 10000,
+    "msg": "success",
+}
+```
+
+HTTP Request：
+
+`POST /api/v1/notify/failed`
+
+请求参数：
+
+参数 | 类型| 必须| 说明
+-----------|-----------|-----------|-----------
+order_id| string | 是|订单id
+token_id| string| 是|提现币种
+reason| string | 是|失败原因
+
+
+响应结果：
+
+参数 | 类型| 说明
+-----------|-----------|-----------
+code | int| 详情见返回类型表
+msg | string | 返回内容；失败时为错误信息
+
+
+
+<aside class="notice">
+提币订单无法处理或者处理失败时，调用此接口，该订单会变为无效订单，订单资产会退回给用户。
+</aside>
+
+
 
 ## 定期对账
 

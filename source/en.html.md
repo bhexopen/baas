@@ -466,6 +466,74 @@ msg | string | Returned content; error message if failed
 </aside>
 
 
+
+
+
+
+
+## Failed withdrawal notify
+
+> Failed withdrawal notify
+
+```shell
+curl
+  -X POST
+  -H "BWAAS-API-KEY: 123"
+  -H "BWAAS-API-TIMESTAMP: 1580887996488"
+  -H "BWAAS-API-SIGNATURE: f321da3"
+  --data '
+  {
+    "order_id": "1234",
+    "token_id": "ABC",
+    "reason": "invalid address"
+  }
+  '
+  https://baas.bluehelix.com/api/v1/notify/failed
+```
+
+```golang
+```
+
+```python
+```
+
+```javascript
+```
+
+> Reponse：
+
+```json
+{
+    "code": 10000,
+    "msg": "success",
+}
+```
+
+HTTP Request：
+
+`POST /api/v1/notify/failed`
+
+Request parameters:
+
+Parameter | Type| Mandatory| Description
+-----------|-----------|-----------|-----------
+order_id| string | yes|order id
+token_id| string| yes| withdrawal currency
+reason | string | yes| failed reason
+
+
+Response：
+
+Parameter | Type| Description
+-----------|-----------|-----------
+code | int| Please see the retruen code list
+msg | string | Returned content; error message if failed
+
+<aside class="notice">
+When the withdrawal order cannot be processed or the processing fails, this interface is called, the order will become invalid, and the order assets will be returned to the user.
+</aside>
+
+
 ## Asset verification
 
 > Asset verification
