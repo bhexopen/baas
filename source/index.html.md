@@ -619,3 +619,4 @@ msg | string | 返回内容；失败时为错误信息
 10019 | WITHDRAWAL_SUSPENDED| 提现暂停
 10020 | TIMESTAMP_EXPIRED| 时间戳过期
 10021 | MEMO_REQUIRED| 需要memo
+10022 | NEED_WAIT | 通知提现失败时，需要等待队列释放

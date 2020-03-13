@@ -628,3 +628,4 @@ Code |Type| Description
 10019 | WITHDRAWAL_SUSPENDED| withdrawal suspended
 10020 | TIMESTAMP_EXPIRED| timestamp expired
 10021 | MEMO_REQUIRED| memo required
+10022 | NEED_WAIT | need to wait queue when notify failed withdrawal
