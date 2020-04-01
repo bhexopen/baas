@@ -64,9 +64,8 @@ def add_address():
 
 def create_key():
     signing_key, verifying_key = ed25519.create_keypair()
-    # signing_key = ed25519.SigningKey(private_key, "","hex")
     print("the private key is", signing_key.to_ascii(encoding="hex"))
-    print("the private key is", verifying_key.to_ascii(encoding="hex"))
+    print("the public key is", verifying_key.to_ascii(encoding="hex"))
 
 
 def create_sign_msg(method,url, timestamp, body):
