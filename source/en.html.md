@@ -298,7 +298,7 @@ code | int| Please see the retruen code list
 msg | string | Returned content; error message if failed
 
 <aside class="notice">
-amount param need to trim 0. For example：
+The amount param need to trim 0. For example：
 
 right： 5.12345
 wrong： 5.12345000
@@ -469,7 +469,7 @@ code | int| Please see the retruen code list
 msg | string | Returned content; error message if failed
 
 <aside class="notice">
-amount param need to trim 0. For example：
+The amount param need to trim 0. For example：
 
 right： 5.12345
 wrong： 5.12345000
@@ -610,7 +610,7 @@ code | int| Please see the retruen code list
 msg | string | Returned content; error message if failed
 
 <aside class="notice">
-amount param need to trim 0. For example：
+The amount param need to trim 0. For example：
 
 right： 5.12345
 wrong： 5.12345000
