@@ -298,6 +298,13 @@ code | int| Please see the retruen code list
 msg | string | Returned content; error message if failed
 
 <aside class="notice">
+amount param need to trim 0. For example：
+
+right： 5.12345
+wrong： 5.12345000
+</aside>
+
+<aside class="notice">
 A call deposit notice will help to ensure the user receives notification after a deposit was made. Each call caters to one (1) deposit action. 
 
 The client is responsible to provide a proof of authenticity of all deposits made. Users will incur losses caused by any incorrect notification sent by the client.
@@ -462,6 +469,13 @@ code | int| Please see the retruen code list
 msg | string | Returned content; error message if failed
 
 <aside class="notice">
+amount param need to trim 0. For example：
+
+right： 5.12345
+wrong： 5.12345000
+</aside>
+
+<aside class="notice">
 *After a successful withdrawal (blockchain shows the transactions on the distributed public ledger), calling for a Successful Withdrawal Notice is required. To ensure the reliability of the withdrawal result, only one withdrawal result is given at a time. It is the responsibility of the client to ensure that a request is called only after the withdrawal is executed.
 </aside>
 
@@ -595,7 +609,12 @@ Parameter | Type| Description
 code | int| Please see the retruen code list
 msg | string | Returned content; error message if failed
 
+<aside class="notice">
+amount param need to trim 0. For example：
 
+right： 5.12345
+wrong： 5.12345000
+</aside>
 
 <aside class="notice">
 Asset verification is performed on a regular basis, and the customer service terminal regularly (Reconciliation is performed every hour or every day, and the client determines the transaction amount reasonably based on the block generation time of the chain) reports the deposit and withdrawal of assets on a specific chain to the server (till the block height specified in asset_info). If there are outstanding withdrawal orders, it is recommended to perform reconciliation after processing is completed.
