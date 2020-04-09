@@ -419,8 +419,8 @@ curl
     "memo": "bhexmemo",
     "amount": "12.34",
     "tx_hash": "0x5f99810a4154379e5b7951419a77250f020be54b78acb9a8747ff8b0ec75769d",
-    "block_height": 6581548,
-    "block_time": 1540480255
+    "block_height": "6581548",
+    "block_time": "1540480255"
   }
   '
   https://baas.bluehelix.com/api/v1/notify/withdrawal
@@ -455,11 +455,11 @@ Parameter | Type| Mandatory| Description
 order_id| string | yes|order id
 token_id| string| yes| withdrawal currency
 to | string | yes|to wihich address
-memo | string | yes|memo
+memo | string | optional|memo
 amount | string | yes|withdrawal amount
 tx_hash| string | yes|transaction hash
-block_height|int |yes|block height
-block_time|int |yes|block time (seconds)
+block_height|string |yes|block height
+block_time|string |yes|block time (seconds)
 
 Response：
 

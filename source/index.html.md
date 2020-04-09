@@ -418,8 +418,8 @@ curl
     "memo": "bhexmemo",
     "amount": "12.34",
     "tx_hash": "0x5f99810a4154379e5b7951419a77250f020be54b78acb9a8747ff8b0ec75769d",
-    "block_height": 6581548,
-    "block_time": 1540480255
+    "block_height": "6581548",
+    "block_time": "1540480255"
   }
   '
   https://baas.bluehelix.com/api/v1/notify/withdrawal
@@ -454,11 +454,11 @@ HTTP Request：
 order_id| string | 是|订单id
 token_id| string| 是|提现币种
 to | string | 是|提现给那个地址
-memo | string | 是|memo标记
+memo | string | 可选|memo标记
 amount | string | 是|提现金额
 tx_hash| string | 是|交易hash
-block_height|int |是|区块高度
-block_time|int |是|区块时间（秒）
+block_height|string |是|区块高度
+block_time|string |是|区块时间（秒）
 
 响应结果：
 
