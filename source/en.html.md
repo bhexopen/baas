@@ -283,7 +283,7 @@ Parameter | Type| Mandatory| Description
 token_id| string| yes|digital asset symbol
 from | string | yes|from which address
 to | string | yes|to which address
-memo| string| optional| memo
+memo| string| optional| memo not null
 amount| string| yes| deposit amount
 tx_hash| string|yes |transaction hash
 index| int | yes| he location of the deposit made

@@ -282,7 +282,7 @@ HTTP Request：
 token_id| string| 是| 币种ID
 from | string | 是|从哪个地址转出来
 to | string | 是|转给那个地址
-memo| string| 可选| memo标识
+memo| string| 可选| memo标识,传值时不能为空
 amount| string| 是| 充值金额
 tx_hash| string|是 |交易hash
 index| string | 是| 该充值所在交易中的位置
