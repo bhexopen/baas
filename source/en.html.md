@@ -629,22 +629,22 @@ Code |Type| Description
 10000 | SUCCESS| successful
 10001 | INVALID_SIGN| invalid signature
 10002 | INVALID_APIKEY | invalid api_key
-10004 | INVALID_CHAIN | invalid chain
-10005 | INVALID_TOKEN_ID | invalid token_id
-10006 | INVALID_PARAMS | invalid paramter
-10007 | INVALID_TO_ADDRESS | invalid deposit address
-10008 | INVALID_ORDER_ID | invalid order id
-10009 | INVALID_AMOUNT | invalid amount
-10010 | INVALID_DECIMALS | invalid decimals
-10011 | INVALID_BLOCK_HEIGHT | invalid block height
-10012 | INVALID_BLOCK_TIME | invalid block time
-10013 | INVALID_TXHASH | invalid tx hash
-10014 | INVALID_INDEX | invalid tx index
-10015 | NETWORK_ERROR | network error
-10016 | REPEAT_DEPOSIT | repeat deposit
-10017 | ASSET_VERIFY_FAILED| asset verification failed
-10018 | DEPOSIT_SUSPENDED| deposit suspended
-10019 | WITHDRAWAL_SUSPENDED| withdrawal suspended
-10020 | TIMESTAMP_EXPIRED| timestamp expired
-10021 | MEMO_REQUIRED| memo required
-10022 | NEED_WAIT | need to wait queue when notify failed withdrawal
+10003 | INVALID_CHAIN | invalid chain
+10004 | INVALID_TOKEN_ID | invalid token_id
+10005 | INVALID_PARAMS | invalid paramter
+10006 | INVALID_TO_ADDRESS | invalid deposit address
+10007 | INVALID_ORDER_ID | invalid order id
+10008 | INVALID_AMOUNT | invalid amount
+10009 | INVALID_DECIMALS | invalid decimals
+10010 | INVALID_BLOCK_HEIGHT | invalid block height
+10011 | INVALID_BLOCK_TIME | invalid block time
+10012 | INVALID_TXHASH | invalid tx hash
+10013 | INVALID_INDEX | invalid tx index
+10014 | NETWORK_ERROR | network error
+10015 | REPEAT_DEPOSIT | repeat deposit
+10016 | ASSET_VERIFY_FAILED| asset verification failed
+10017 | DEPOSIT_SUSPENDED| deposit suspended
+10018 | WITHDRAWAL_SUSPENDED| withdrawal suspended
+10019 | TIMESTAMP_EXPIRED| timestamp expired
+10020 | MEMO_REQUIRED| memo required
+10021 | NEED_WAIT | need to wait queue when notify failed withdrawal
