@@ -646,3 +646,4 @@ amount参数需要去掉多余的0，举例：
 10019 | TIMESTAMP_EXPIRED| 时间戳过期
 10020 | MEMO_REQUIRED| 需要memo
 10021 | NEED_WAIT | 通知提现失败时，需要等待队列释放
+10022 | INVALID_FROM_ADDRESS | 无效的from地址

@@ -648,3 +648,4 @@ Code |Type| Description
 10019 | TIMESTAMP_EXPIRED| timestamp expired
 10020 | MEMO_REQUIRED| memo required
 10021 | NEED_WAIT | need to wait queue when notify failed withdrawal
+10022 | INVALID_FROM_ADDRESS | invalid from address
