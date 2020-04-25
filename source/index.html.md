@@ -28,7 +28,6 @@ BLUEHELIX BAAS 提供REST风格的API（HTTPS + JSON)，方便BHOP客户自助�
 
 ## 申请方式
 - 工单系统
-- 邮箱 globalbd@bhex.com
 
 ## 上币申请材料
 

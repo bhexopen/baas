@@ -23,7 +23,6 @@ Before requesting for an API socket, users need to apply for an APIKEY by using 
 
 ## How to apply?
 - Submit a Ticket Request
-- Email to globalbd@bhex.com
 
 ## Information Required For Coin Listing
 
