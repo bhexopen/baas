@@ -19,7 +19,7 @@ search: true
 ## Overview
 BLUEHELIX BAAS provides a REST API (HTTPS + JSON) to facilitate Bluehelix Cloud customers' for self-service access to third-party public chains.
 
-Before requesting for an API socket, users need to apply for an APIKEY by using ED25519 algorithm to generate the Public & Private Keys. Users are required to save the Public & Private Keys. Submit the application for coin listing and attach the Public & Private Keys accordingly. The APIKEY will then be issued to the applicant.
+Before requesting for an API socket, users need to apply for an APIKEY by using ED25519 algorithm to generate the Public & Private Keys. Users are required to save the Public & Private Keys. Submit the application for coin listing and attach the Public Keys accordingly. The APIKEY will then be issued to the applicant.
 
 ## How to apply?
 - Submit a Ticket Request
