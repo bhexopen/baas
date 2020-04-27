@@ -562,7 +562,6 @@ curl
     "token_id": "ABC",
     "total_deposit_amount": "100000.567",
     "total_withdrawal_amount": "10000",
-    "total_fee_amount": "100",
     "last_block_height": "100000"
   }
   '
@@ -598,7 +597,6 @@ Parameter | Type| Mandatory| Description
 token_id| string| yes|withdrawal currency
 total_deposit_amount | string | yes|total deposit amount
 total_withdrawal_amount | string | yes|total withdrawal amount
-total_fee_amount | string | yes|total on-chain transaction fee
 last_block_height|string |yes|verification of highest block height
 
 Response：
