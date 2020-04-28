@@ -245,9 +245,9 @@ curl
         "memo":"1234",
         "amount": "124.23",
         "tx_hash": "1234",
-        "index": 1,
-        "block_height": 124,
-        "block_time": 1234
+        "index": "1",
+        "block_height": "1234",
+        "block_time": "1234"
     }
   '
   https://baas.bluehelix.com/api/v1/notify/deposit
@@ -285,9 +285,9 @@ to | string | yes|to which address
 memo| string| optional| memo not null
 amount| string| yes| deposit amount
 tx_hash| string|yes |transaction hash
-index| int | yes| he location of the deposit made
-block_height| int64| yes| block height
-block_time| int64| yes| block time (seconds)
+index| string | yes| he location of the deposit made
+block_height| string| yes| block height
+block_time| string| yes| block time (seconds)
 
 Response：
 
