@@ -221,7 +221,7 @@ msg | string | Returned content; error message if failed
 
 
 <aside class="notice">
-Check that the balance number of addresses is not less than the specified value. If the value is less than 1,000, please generate a new batch of addresses by calling the add deposit address. It is recommended to add no more than 100 deposit addresses per call. Should you require a larger number of addresses, please perform several add deposit requests accordingly.
+Check that the balance number of addresses is not less than the specified value. If the value is less than 1,000, please generate a new batch of addresses by calling the add deposit address. It is recommended to add no more than 100 deposit addresses per call. Maximum number of addresses is limited to 10k. Should you require a larger number of addresses, please perform several add deposit requests accordingly.
 
 For Blockchain using Tag, client needs only to request for one (1) deposit address. Server will assign a unique tag to each address.
 </aside>
@@ -646,3 +646,4 @@ Code |Type| Description
 10020 | MEMO_REQUIRED| memo required
 10021 | NEED_WAIT | need to wait queue when notify failed withdrawal
 10022 | INVALID_FROM_ADDRESS | invalid from address
+10023 | ADDRESS_ENOUGH | added addresses enough
