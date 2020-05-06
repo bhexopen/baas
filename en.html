@@ -568,7 +568,7 @@ It is recommended that you generate the count of unused address/addresses regula
 </tbody></table>
 
 <aside class="notice">
-Check that the balance number of addresses is not less than the specified value. If the value is less than 1,000, please generate a new batch of addresses by calling the add deposit address. It is recommended to add no more than 100 deposit addresses per call. Should you require a larger number of addresses, please perform several add deposit requests accordingly.
+Check that the balance number of addresses is not less than the specified value. If the value is less than 1,000, please generate a new batch of addresses by calling the add deposit address. It is recommended to add no more than 100 deposit addresses per call. Maximum number of addresses is limited to 10k. Should you require a larger number of addresses, please perform several add deposit requests accordingly.
 
 For Blockchain using Tag, client needs only to request for one (1) deposit address. Server will assign a unique tag to each address.
 </aside>
@@ -1269,6 +1269,11 @@ When the server finds that the asset information returned by the client is incon
 <td>10022</td>
 <td>INVALID_FROM_ADDRESS</td>
 <td>invalid from address</td>
+</tr>
+<tr>
+<td>10023</td>
+<td>ADDRESS_ENOUGH</td>
+<td>added addresses enough</td>
 </tr>
 </tbody></table>
 
