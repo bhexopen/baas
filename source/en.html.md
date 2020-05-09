@@ -647,3 +647,4 @@ Code |Type| Description
 10021 | NEED_WAIT | need to wait queue when notify failed withdrawal
 10022 | INVALID_FROM_ADDRESS | invalid from address
 10023 | ADDRESS_ENOUGH | added addresses enough
+10024 | NEED_RETRY | retry required
