@@ -22,9 +22,10 @@ BLUEHELIX BAAS 提供REST风格的API（HTTPS + JSON)，方便BHOP客户自助�
 在请求API接口之前，需要申请APIKEY, 使用ED25519算法生成公私钥对，用户自己保存私钥，公钥在上币申请时进行提交，得到APIKEY。
 
 <aside class="notice">
-客户端：全节点运营方
-服务端：BAAS
+<p>客户端：全节点运营方</p>
+<p>服务端：BAAS</p>
 </aside>
+
 
 ## 申请方式
 - 工单系统
