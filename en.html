@@ -50,7 +50,7 @@
 .highlight .cs {
   color: #75715e;
 }
-.highlight .c, .highlight .cd {
+.highlight .c, .highlight .ch, .highlight .cd, .highlight .cpf {
   color: #75715e;
 }
 .highlight .err {
@@ -134,7 +134,7 @@
 .highlight .s1 {
   color: #e6db74;
 }
-.highlight .s {
+.highlight .s, .highlight .sa, .highlight .dl {
   color: #e6db74;
 }
 .highlight .na {
@@ -149,41 +149,52 @@
 .highlight .ne {
   color: #a6e22e;
 }
-.highlight .nf {
+.highlight .nf, .highlight .fm {
   color: #a6e22e;
 }
 .highlight .vc {
   color: #ffffff;
+  background-color: #272822;
 }
 .highlight .nn {
   color: #ffffff;
+  background-color: #272822;
 }
 .highlight .nl {
   color: #ffffff;
+  background-color: #272822;
 }
 .highlight .ni {
   color: #ffffff;
+  background-color: #272822;
 }
 .highlight .bp {
   color: #ffffff;
+  background-color: #272822;
 }
 .highlight .vg {
   color: #ffffff;
+  background-color: #272822;
 }
 .highlight .vi {
   color: #ffffff;
+  background-color: #272822;
 }
-.highlight .nv {
+.highlight .nv, .highlight .vm {
   color: #ffffff;
+  background-color: #272822;
 }
 .highlight .w {
   color: #ffffff;
+  background-color: #272822;
 }
 .highlight {
   color: #ffffff;
+  background-color: #272822;
 }
 .highlight .n, .highlight .py, .highlight .nx {
   color: #ffffff;
+  background-color: #272822;
 }
 .highlight .ow {
   color: #f92672;
@@ -204,9 +215,9 @@
   color: #f92672;
 }
     </style>
-    <link href="stylesheets/screen-1ab8452a.css" rel="stylesheet" media="screen" />
-    <link href="stylesheets/print-bccf8c07.css" rel="stylesheet" media="print" />
-      <script src="javascripts/all-c5541673.js"></script>
+    <link href="stylesheets/screen-6a1697bb.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print-953e3353.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all-e9bde216.js"></script>
   </head>
 
   <body class="en" data-languages="[&quot;shell&quot;,&quot;python&quot;,&quot;javascript&quot;,&quot;golang&quot;]">
@@ -216,12 +227,12 @@
     <a href="#" id="nav-button">
       <span>
         NAV
-        <img src="images/navbar-cad8cdcb.png" alt="Navbar" />
+        <img src="images/navbar-cad8cdcb.png" alt="" />
       </span>
     </a>
     <div class="toc-wrapper">
       <a href="https://www.bluehelix.cloud/">
-        <img src="images/logo-9df24636.png" class="logo" alt="Logo" />
+        <img src="images/logo-9df24636.png" class="logo" alt="" />
       </a>
         <div class="lang-selector">
               <a href="#" data-language-name="shell">shell</a>
@@ -309,7 +320,7 @@
         <h1 id='about-bluehelix-baas'>About BLUEHELIX BAAS</h1><h2 id='overview'>Overview</h2>
 <p>BLUEHELIX BAAS provides a REST API (HTTPS + JSON) to facilitate Bluehelix Cloud customers&#39; for self-service access to third-party public chains.</p>
 
-<p>Before requesting for an API socket, users need to apply for an APIKEY by using ED25519 algorithm to generate the Public &amp; Private Keys. Users are required to save the Public &amp; Private Keys. Submit the application for coin listing and attach the Public Keys accordingly. The APIKEY will then be issued to the applicant.</p>
+<p>Before requesting for an API socket, users need to apply for an APIKEY by using ED25519 algorithm to generate the Public &amp; Private Keys(see client demos). Users are required to save the Public &amp; Private Keys. Submit the application for coin listing and attach the Public Keys accordingly. The APIKEY will then be issued to the applicant.</p>
 
 <aside class="notice">
 <p>Since the BAAS API service is associated with BHOP brokers, the following points are required for testing the API：</p>
@@ -346,7 +357,7 @@
 </tr>
 <tr>
 <td>IP address</td>
-<td>100.100.100.100  (used as IP whitelist restriction)</td>
+<td>100.100.100.100  (used as IP whitelist restriction, please use a elastic IP)</td>
 </tr>
 </tbody></table>
 <h2 id='client-sample'>Client Sample</h2>
@@ -380,14 +391,14 @@ https://github.com/bhexopen/baas.</p>
 </tbody></table>
 
 <p>The request data shown on the right:：</p>
-<pre class="highlight plaintext"><code>{
+<div class="highlight"><pre class="highlight plaintext"><code>{
   "side": 1,
   "amount": "100.0543",
   "token_id": "ABC",
   "tx_hash":"0x1234567890",
   "block_height": 1000000
 }
-</code></pre>
+</code></pre></div>
 <p>Before signing in, you need to sort the request parameters according to the first letter of the key to obtain the following data <code>POST|/api/v1/test/|1580887996488|amount=100.0543&amp;block_height=1000000&amp;side=1&amp;token_id=ABC&amp;tx_hash=0x1234567890</code></p>
 
 <p>Use your locally generated private_key to sign off the data with ED25519. Then Hex-encode the binary result to obtain the final signature.</p>
@@ -429,23 +440,23 @@ https://github.com/bhexopen/baas.</p>
 <blockquote>
 <p>Count the number of unused address</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl
-  -X GET
-  -H <span class="s2">"BWAAS-API-KEY: 123"</span>
-  -H <span class="s2">"BWAAS-API-TIMESTAMP: 1580887996488"</span>
-  -H <span class="s2">"BWAAS-API-SIGNATURE: f321da3"</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl
+  <span class="nt">-X</span> GET
+  <span class="nt">-H</span> <span class="s2">"BWAAS-API-KEY: 123"</span>
+  <span class="nt">-H</span> <span class="s2">"BWAAS-API-TIMESTAMP: 1580887996488"</span>
+  <span class="nt">-H</span> <span class="s2">"BWAAS-API-SIGNATURE: f321da3"</span>
   https://baas.bluehelix.com/api/v1/address/unused/count/
 ?chain<span class="o">=</span>ABC
-</code></pre><pre class="highlight go"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight javascript tab-javascript"><code></code></pre>
+</code></pre></div><div class="highlight"><pre class="highlight go"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code></code></pre></div>
 <blockquote>
 <p>Reponse：</p>
 </blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="s2">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="w">
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="mi">1000</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre>
+</span></code></pre></div>
 <p>HTTP Request：</p>
 
 <p><code>GET /api/v1/address/unused/count?chain=ABC</code></p>
@@ -501,12 +512,12 @@ It is recommended that you generate the count of unused address/addresses regula
 <blockquote>
 <p>Add deposit address</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl
-  -X POST
-  -H <span class="s2">"BWAAS-API-KEY: 123"</span>
-  -H <span class="s2">"BWAAS-API-TIMESTAMP: 1580887996488"</span>
-  -H <span class="s2">"BWAAS-API-SIGNATURE: f321da3"</span>
-  -- data <span class="s1">'
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl
+  <span class="nt">-X</span> POST
+  <span class="nt">-H</span> <span class="s2">"BWAAS-API-KEY: 123"</span>
+  <span class="nt">-H</span> <span class="s2">"BWAAS-API-TIMESTAMP: 1580887996488"</span>
+  <span class="nt">-H</span> <span class="s2">"BWAAS-API-SIGNATURE: f321da3"</span>
+  <span class="nt">--</span> data <span class="s1">'
     {
       "chain":"ABC",
       "addr_list":[
@@ -516,15 +527,15 @@ It is recommended that you generate the count of unused address/addresses regula
     }
   '</span>
   https://baas.bluehelix.com/api/v1/address/add
-</code></pre><pre class="highlight go"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight javascript tab-javascript"><code></code></pre>
+</code></pre></div><div class="highlight"><pre class="highlight go"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code></code></pre></div>
 <blockquote>
 <p>Reponse：</p>
 </blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="s2">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre>
+</span></code></pre></div>
 <p>HTTP Request：</p>
 
 <p><code>POST /api/v1/address/add</code></p>
@@ -583,12 +594,12 @@ For Blockchain using Tag, client needs only to request for one (1) deposit addre
 <blockquote>
 <p>Deposit Notify</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl
-  -X POST
-  -H <span class="s2">"BWAAS-API-KEY: 123"</span>
-  -H <span class="s2">"BWAAS-API-TIMESTAMP: 1580887996488"</span>
-  -H <span class="s2">"BWAAS-API-SIGNATURE: f321da3"</span>
-  -- data <span class="s1">'
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl
+  <span class="nt">-X</span> POST
+  <span class="nt">-H</span> <span class="s2">"BWAAS-API-KEY: 123"</span>
+  <span class="nt">-H</span> <span class="s2">"BWAAS-API-TIMESTAMP: 1580887996488"</span>
+  <span class="nt">-H</span> <span class="s2">"BWAAS-API-SIGNATURE: f321da3"</span>
+  <span class="nt">--</span> data <span class="s1">'
     {
         "token_id": "ABC",
         "from": "addr1",
@@ -602,15 +613,15 @@ For Blockchain using Tag, client needs only to request for one (1) deposit addre
     }
   '</span>
   https://baas.bluehelix.com/api/v1/notify/deposit
-</code></pre><pre class="highlight go"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight javascript tab-javascript"><code></code></pre>
+</code></pre></div><div class="highlight"><pre class="highlight go"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code></code></pre></div>
 <blockquote>
 <p>Reponse：</p>
 </blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="s2">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre>
+</span></code></pre></div>
 <p>HTTP Request：</p>
 
 <p><code>POST /api/v1/notify/deposit</code></p>
@@ -718,37 +729,37 @@ The client is responsible to provide a proof of authenticity of all deposits mad
 <blockquote>
 <p>Generate pending withdrawal orders</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl
-  -X GET
-  -H <span class="s2">"BWAAS-API-KEY: 123"</span>
-  -H <span class="s2">"BWAAS-API-TIMESTAMP: 1580887996488"</span>
-  -H <span class="s2">"BWAAS-API-SIGNATURE: f321da3"</span>
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl
+  <span class="nt">-X</span> GET
+  <span class="nt">-H</span> <span class="s2">"BWAAS-API-KEY: 123"</span>
+  <span class="nt">-H</span> <span class="s2">"BWAAS-API-TIMESTAMP: 1580887996488"</span>
+  <span class="nt">-H</span> <span class="s2">"BWAAS-API-SIGNATURE: f321da3"</span>
   https://baas.bluehelix.com/api/v1/withdrawal/orders?chain<span class="o">=</span>ABC
-</code></pre><pre class="highlight go"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight javascript tab-javascript"><code></code></pre>
+</code></pre></div><div class="highlight"><pre class="highlight go"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code></code></pre></div>
 <blockquote>
 <p>Reponse：</p>
 </blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="s2">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"data"</span><span class="p">::[</span><span class="w">
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"data"</span><span class="p">:</span><span class="err">:</span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1234"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"token_id"</span><span class="p">:</span><span class="s2">"ABC"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"to"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bhexaddr1"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"memo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bhexmemo"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12.34"</span><span class="w">
+            </span><span class="nl">"order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1234"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"token_id"</span><span class="p">:</span><span class="s2">"ABC"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"to"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bhexaddr1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"memo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bhexmemo"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12.34"</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2345"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"token_id"</span><span class="p">:</span><span class="s2">"ABC"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"to"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bhexaddr1"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"memo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bhexmemo"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12.34"</span><span class="w">
+            </span><span class="nl">"order_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2345"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"token_id"</span><span class="p">:</span><span class="s2">"ABC"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"to"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bhexaddr1"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"memo"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bhexmemo"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"12.34"</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre>
+</span></code></pre></div>
 <p>HTTP Request：</p>
 
 <p><code>GET /api/v1/withdrawal/orders?chain=ABC</code></p>
@@ -848,12 +859,12 @@ Each request generates up to 50 outstanding orders at a time.
 <blockquote>
 <p>Successful withdrawal notify</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl
-  -X POST
-  -H <span class="s2">"BWAAS-API-KEY: 123"</span>
-  -H <span class="s2">"BWAAS-API-TIMESTAMP: 1580887996488"</span>
-  -H <span class="s2">"BWAAS-API-SIGNATURE: f321da3"</span>
-  --data <span class="s1">'
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl
+  <span class="nt">-X</span> POST
+  <span class="nt">-H</span> <span class="s2">"BWAAS-API-KEY: 123"</span>
+  <span class="nt">-H</span> <span class="s2">"BWAAS-API-TIMESTAMP: 1580887996488"</span>
+  <span class="nt">-H</span> <span class="s2">"BWAAS-API-SIGNATURE: f321da3"</span>
+  <span class="nt">--data</span> <span class="s1">'
   {
     "order_id": "1234",
     "token_id": "ABC",
@@ -866,15 +877,15 @@ Each request generates up to 50 outstanding orders at a time.
   }
   '</span>
   https://baas.bluehelix.com/api/v1/notify/withdrawal
-</code></pre><pre class="highlight go"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight javascript tab-javascript"><code></code></pre>
+</code></pre></div><div class="highlight"><pre class="highlight go"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code></code></pre></div>
 <blockquote>
 <p>Reponse：</p>
 </blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="s2">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre>
+</span></code></pre></div>
 <p>HTTP Request：</p>
 
 <p><code>POST /api/v1/notify/withdrawal</code></p>
@@ -974,12 +985,12 @@ wrong： 5.12345000
 <blockquote>
 <p>Failed withdrawal notify</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl
-  -X POST
-  -H <span class="s2">"BWAAS-API-KEY: 123"</span>
-  -H <span class="s2">"BWAAS-API-TIMESTAMP: 1580887996488"</span>
-  -H <span class="s2">"BWAAS-API-SIGNATURE: f321da3"</span>
-  --data <span class="s1">'
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl
+  <span class="nt">-X</span> POST
+  <span class="nt">-H</span> <span class="s2">"BWAAS-API-KEY: 123"</span>
+  <span class="nt">-H</span> <span class="s2">"BWAAS-API-TIMESTAMP: 1580887996488"</span>
+  <span class="nt">-H</span> <span class="s2">"BWAAS-API-SIGNATURE: f321da3"</span>
+  <span class="nt">--data</span> <span class="s1">'
   {
     "order_id": "1234",
     "token_id": "ABC",
@@ -987,15 +998,15 @@ wrong： 5.12345000
   }
   '</span>
   https://baas.bluehelix.com/api/v1/notify/failed
-</code></pre><pre class="highlight go"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight javascript tab-javascript"><code></code></pre>
+</code></pre></div><div class="highlight"><pre class="highlight go"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code></code></pre></div>
 <blockquote>
 <p>Reponse：</p>
 </blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="s2">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre>
+</span></code></pre></div>
 <p>HTTP Request：</p>
 
 <p><code>POST /api/v1/notify/failed</code></p>
@@ -1058,12 +1069,12 @@ When the withdrawal order cannot be processed or the processing fails, this inte
 <blockquote>
 <p>Asset verification</p>
 </blockquote>
-<pre class="highlight shell tab-shell"><code>curl
-  -X POST
-  -H <span class="s2">"BWAAS-API-KEY: 123"</span>
-  -H <span class="s2">"BWAAS-API-TIMESTAMP: 1580887996488"</span>
-  -H <span class="s2">"BWAAS-API-SIGNATURE: f321da3"</span>
-  --data <span class="s1">'
+<div class="highlight"><pre class="highlight shell tab-shell"><code>curl
+  <span class="nt">-X</span> POST
+  <span class="nt">-H</span> <span class="s2">"BWAAS-API-KEY: 123"</span>
+  <span class="nt">-H</span> <span class="s2">"BWAAS-API-TIMESTAMP: 1580887996488"</span>
+  <span class="nt">-H</span> <span class="s2">"BWAAS-API-SIGNATURE: f321da3"</span>
+  <span class="nt">--data</span> <span class="s1">'
   {
     "token_id": "ABC",
     "total_deposit_amount": "100000.567",
@@ -1072,15 +1083,15 @@ When the withdrawal order cannot be processed or the processing fails, this inte
   }
   '</span>
   https://baas.bluehelix.com/api/v1/asset/verify
-</code></pre><pre class="highlight go"><code></code></pre><pre class="highlight python tab-python"><code></code></pre><pre class="highlight javascript tab-javascript"><code></code></pre>
+</code></pre></div><div class="highlight"><pre class="highlight go"><code></code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code></code></pre></div><div class="highlight"><pre class="highlight javascript tab-javascript"><code></code></pre></div>
 <blockquote>
 <p>Reponse：</p>
 </blockquote>
-<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="s2">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"code"</span><span class="p">:</span><span class="w"> </span><span class="mi">10000</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"msg"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre>
+</span></code></pre></div>
 <p>HTTP Request：</p>
 
 <p><code>POST /api/v1/asset/verify</code></p>
