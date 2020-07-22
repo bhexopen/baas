@@ -19,7 +19,7 @@ search: true
 ## Overview
 BLUEHELIX BAAS provides a REST API (HTTPS + JSON) to facilitate Bluehelix Cloud customers' for self-service access to third-party public chains.
 
-Before requesting for an API socket, users need to apply for an APIKEY by using ED25519 algorithm to generate the Public & Private Keys. Users are required to save the Public & Private Keys. Submit the application for coin listing and attach the Public Keys accordingly. The APIKEY will then be issued to the applicant.
+Before requesting for an API socket, users need to apply for an APIKEY by using ED25519 algorithm to generate the Public & Private Keys(see client demos). Users are required to save the Public & Private Keys. Submit the application for coin listing and attach the Public Keys accordingly. The APIKEY will then be issued to the applicant.
 
 <aside class="notice">
 <p>Since the BAAS API service is associated with BHOP brokers, the following points are required for testing the API：</p>
@@ -39,7 +39,7 @@ Digital Asset Symbol | ABC
 Explorer| ABC
 Decimals| 8
 Total Supply| 10 billion
-IP address | 100.100.100.100  (used as IP whitelist restriction)
+IP address | 100.100.100.100  (used as IP whitelist restriction, please use a elastic IP)
 
 ## Client Sample
 Developer can code using any one of the following programming languages (Python, Golang, Java) 

@@ -19,7 +19,7 @@ search: true
 ## 概述
 BLUEHELIX BAAS 提供REST风格的API（HTTPS + JSON)，方便BHOP客户自助接入第三方公链。
 
-在请求API接口之前，需要申请APIKEY, 使用ED25519算法生成公私钥对，用户自己保存私钥，公钥在上币申请时进行提交，得到APIKEY。
+在请求API接口之前，需要申请APIKEY, 使用ED25519算法生成公私钥对(可以使用clients示例代码生成)，用户自己保存私钥，16进制格式的公钥在上币申请时进行提交，得到APIKEY。
 
 <aside class="notice">
 <p>客户端：全节点运营方</p>
@@ -44,7 +44,7 @@ BLUEHELIX BAAS 提供REST风格的API（HTTPS + JSON)，方便BHOP客户自助�
 所属公链| ABC
 代币精度| 8
 代币总量| 100亿
-IP地址 | 100.100.100.100 （用作IP白名单限制）
+IP地址 | 100.100.100.100 （用作IP白名单限制,请提交固定IP,严禁使用动态IP）
 
 ## 客户端代码示例
 提供3种编程语言（Python, Golang, Java)的用户端代码供用户使用 [https://github.com/bhexopen/baas/clients] (https://github.com/bhexopen/baas)。
