@@ -39,6 +39,9 @@ Digital Asset Symbol | ABC
 Explorer| ABC
 Decimals| 8
 Total Supply| 10 billion
+Address check regexp | ^0x[0-9a-fA-F]{50}$
+Memo required | Y/N
+Memo check regexp | ^[0-9]{6-12}$
 IP address | 100.100.100.100  (used as IP whitelist restriction, please use a elastic IP)
 
 ## Client Sample
