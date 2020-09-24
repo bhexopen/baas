@@ -658,3 +658,4 @@ Code |Type| Description
 10022 | INVALID_FROM_ADDRESS | invalid from address
 10023 | ADDRESS_ENOUGH | added addresses enough
 10024 | NEED_RETRY | retry required
+10025 | INVALID_MEMO | invalid memo
