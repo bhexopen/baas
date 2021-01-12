@@ -1,8 +1,8 @@
 /*
  * *******************************************************************
  * @项目名称: go
- * @文件名称: hbtc_internal_aggr_token.go
- * @Date: 2020/08/20
+ * @文件名称: hbtc_baas_token.go
+ * @Date: 2020/10/11
  * @Author: zhiming.sun
  * @Copyright（C）: 2020 BlueHelix Inc.   All rights reserved.
  * 注意：本内容仅限于内部传阅，禁止外泄以及用于其他的商业目的.
@@ -20,7 +20,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"sort"
-	"strconv"
 	"strings"
 	"time"
 
@@ -30,62 +29,68 @@ import (
 
 const (
 	domain     = "https://baas.bluehelix.com"
-	privateKey = "7b1b2a1e0026723a93afd9271e3520199aee4b867c1ff329c0469bfe40440020910aa5a57367fc43b437b19abb67ec01b747675eba726bcdfd4990708607f4c3"
-	pubKey     = "910aa5a57367fc43b437b19abb67ec01b747675eba726bcdfd4990708607f4c3"
+	privateKey = "6180ead1719869c41da5479f3ac0c3dc86a140ffc92f19c8e5734532288d2b104e66c61578550e2c30f12e9d7946173f23066e3f76896aafb2b4df4bdb3952da"
+	pubkey     = "4e66c61578550e2c30f12e9d7946173f23066e3f76896aafb2b4df4bdb3952da"
 	chain      = "HBTC-AGGR-CHAIN"
 	apiKey     = "40221a1881ae4c49b6662986ae58f667"
 )
 
 func main() {
-	// getAddressCount()
-	// addAddress()
-	// deposit("SXP8")
-	// deposit("BAND8")
-	// deposit("MANA8")
-	// deposit("WAVES8")
-	// deposit("LEND8")
-	// deposit("WNXM8")
-	// deposit("ANT8")
-	// deposit("MKR8")
-	// deposit("KSM8")
-	// deposit("OCEAN8")
-	// deposit("DOCK8")
-	// deposit("SUSHI8")
-	// deposit("IDEX8")
-	// deposit("SNX8")
-	// deposit("MTA8")
-	// deposit("RING8")
-	// deposit("YAMV28")
-	// deposit("YFV8")
-	// deposit("CVP8")
-	// deposit("CRV8")
-	// deposit("LEND8")
-	// deposit("UMA8")
-	// deposit("REN8")
-	// deposit("BNT8")
-	// deposit("DIA8")
-	// deposit("ANKR8")
-	// deposit("TRADE8")
-	// deposit("YFI8")
-	// deposit("YFII8")
-	// deposit("PNK8")
-	// deposit("LRC8")
-	// deposit("KNC8")
-	// deposit("TRB8")
-	// deposit("BZRX8")
-	// deposit("RING8")
-	// deposit("STORJ8")
-	// deposit("MANA8")
-	// deposit("PEARL8")
-	// deposit("BTS8")
-	// deposit("NBS8")
-	// deposit("SUN8")
-	// deposit("GOF8")
-	// deposit("UNI8")
-	// deposit("AVAX8")
+	// testCreateKey()
+	// testGetAddressCount()
+	// testAddAddress()
+	deposit("TEST1")
 }
 
-func getAddressCount() {
+func deposit(tokenID string) {
+	timestamp := fmt.Sprintf("%v", time.Now().UnixNano()/1e6)
+
+	txHash, _ := uuid.NewV4()
+	postData := map[string]interface{}{
+		"token_id":     tokenID,
+		"from":         "HBTC-AGGR-CHAIN-POOL",
+		"to":           "HBTC-AGGR-CHAIN-ADDRESS",
+		"amount":       "100000000",
+		"tx_hash":      txHash.String(),
+		"index":        "0",
+		"block_height": timestamp,
+		"block_time":   timestamp,
+	}
+
+	path := "/api/v1/notify/deposit"
+	msg := createSignMsg(path, "POST", timestamp, postData)
+	fmt.Printf(" msg:%v\n", msg)
+
+	priBytes, _ := hex.DecodeString(privateKey)
+	pri := ed25519.PrivateKey(priBytes)
+
+	signMsg := ed25519.Sign(pri, []byte(msg))
+	signature := hex.EncodeToString(signMsg)
+
+	fmt.Printf("signature:%v\n", signature)
+
+	postBody, _ := json.Marshal(postData)
+
+	client := &http.Client{}
+	request, err := http.NewRequest("POST", domain+path, bytes.NewReader(postBody))
+
+	request.Header.Add("BWAAS-API-KEY", apiKey)
+	request.Header.Add("BWAAS-API-SIGNATURE", signature)
+	request.Header.Add("BWAAS-API-TIMESTAMP", timestamp)
+	request.Header.Add("Content-Type", "application/json")
+
+	resp, err := client.Do(request)
+	if err != nil {
+		fmt.Printf("http get err:%v\n", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	result, _ := ioutil.ReadAll(resp.Body)
+	fmt.Printf("resp code:%v, body:%v\n", resp.StatusCode, string(result))
+}
+
+func testGetAddressCount() {
 	timestamp := fmt.Sprintf("%v", time.Now().UnixNano()/1e6)
 
 	path := "/api/v1/address/unused/count?chain=" + chain
@@ -118,13 +123,14 @@ func getAddressCount() {
 	fmt.Printf("resp code:%v, body:%v\n", resp.StatusCode, string(result))
 }
 
-func addAddress() {
+func testAddAddress() {
 	timestamp := fmt.Sprintf("%v", time.Now().UnixNano()/1e6)
 
 	postData := map[string]interface{}{
 		"chain": chain,
 		"addr_list": []string{
-			"HBTC-AGGR-CHAIN-ADDRESS",
+			"BAAS-TEST-address-12345",
+			"BAAS-TEST-address-54321",
 		},
 	}
 
@@ -161,56 +167,7 @@ func addAddress() {
 	fmt.Printf("resp code:%v, body:%v\n", resp.StatusCode, string(result))
 }
 
-func deposit(tokenID string) {
-	timestamp := fmt.Sprintf("%v", time.Now().UnixNano()/1e6)
-	txHash, _ := uuid.NewV4()
-	blockTime := strconv.FormatInt(time.Now().Unix(), 10)
-
-	postData := map[string]interface{}{
-		"token_id":     tokenID,
-		"from":         "HBTC-AGGR-CHAIN-POOL",
-		"to":           "HBTC-AGGR-CHAIN-ADDRESS",
-		"amount":       "100000000",
-		"tx_hash":      txHash.String(),
-		"index":        "0",
-		"block_height": timestamp,
-		"block_time":   blockTime,
-	}
-
-	path := "/api/v1/notify/deposit"
-	msg := createSignMsg(path, "POST", timestamp, postData)
-	fmt.Printf(" msg:%v\n", msg)
-
-	priBytes, _ := hex.DecodeString(privateKey)
-	pri := ed25519.PrivateKey(priBytes)
-
-	signMsg := ed25519.Sign(pri, []byte(msg))
-	signature := hex.EncodeToString(signMsg)
-
-	fmt.Printf("signature:%v\n", signature)
-
-	postBody, _ := json.Marshal(postData)
-
-	client := &http.Client{}
-	request, err := http.NewRequest("POST", domain+path, bytes.NewReader(postBody))
-
-	request.Header.Add("BWAAS-API-KEY", apiKey)
-	request.Header.Add("BWAAS-API-SIGNATURE", signature)
-	request.Header.Add("BWAAS-API-TIMESTAMP", timestamp)
-	request.Header.Add("Content-Type", "application/json")
-
-	resp, err := client.Do(request)
-	if err != nil {
-		fmt.Printf("http get err:%v\n", err)
-		return
-	}
-	defer resp.Body.Close()
-
-	result, _ := ioutil.ReadAll(resp.Body)
-	fmt.Printf("resp code:%v, body:%v\n", resp.StatusCode, string(result))
-}
-
-func ceateKey() (string, string) {
+func testCreateKey() (string, string) {
 	pub, pri, _ := ed25519.GenerateKey(rand.Reader)
 	pubStr, priStr := hex.EncodeToString(pub), hex.EncodeToString(pri)
 	fmt.Printf("pub:%v\n, pri:%v\n", pubStr, priStr)
