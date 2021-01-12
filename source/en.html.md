@@ -659,3 +659,4 @@ Code |Type| Description
 10023 | ADDRESS_ENOUGH | added addresses enough
 10024 | NEED_RETRY | retry required
 10025 | INVALID_MEMO | invalid memo
+10026 | ADDRESS_TOO_LONG | address too long, max 512

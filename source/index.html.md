@@ -652,3 +652,4 @@ msg | string | 返回内容；失败时为错误信息
 10023 | ADDRESS_ENOUGH | 备用地址足够多
 10024 | NEED_RETRY | 处理失败，需要客户端重试
 10025 | INVALID_MEMO | 无效的memo
+10026 | ADDRESS_TOO_LONG | 地址太长，最大 允许512
